@@ -568,6 +568,7 @@ p{
         gap: 15px;
         margin-bottom: 2px;
         margin-left: 20px;
+        justify-items: center;
     }
     
     .header {

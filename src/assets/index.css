@@ -2,15 +2,18 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
-  overflow-x: hidden;
+  overflow: hidden;
   background: #0b0920;
+  height: 100vh;
+  width: 100vw;
 }
 
 /* =========================================
    ANIMATED BACKGROUND GRADIENT
 ========================================= */
 .app-container {
-  min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -20,7 +23,7 @@ body {
   animation: gradientBG 15s ease infinite;
   position: relative;
   z-index: 0;
-  overflow:hidden
+  overflow: hidden;
 }
 
 @keyframes gradientBG {
@@ -228,19 +231,22 @@ body {
   width: 100%;
   text-align: center;
   animation: fadeIn 1s ease-out;
+  flex-shrink: 0;
 }
 
-.app-header { padding: 0; }
+.app-header { 
+  padding: 8px 0; 
+}
 
 .logo {
-  height: 70px;
+  height: 50px;
   margin: 0 15px;
   vertical-align: middle;
 }
 
 .app-footer {
-  padding: 5px 0;
-  font-size: 1em;
+  padding: 8px 0;
+  font-size: 0.9em;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -249,53 +255,52 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;   /* reduce bottom padding */
-  overflow: hidden; /* prevent pushing footer */
-}
-
-.app-container{
+  padding: 12px;
   overflow: hidden;
+  min-height: 0;
 }
 
 /* =========================================
    HOMEPAGE GLASSMORPHISM CARD
 ========================================= */
 .homepage-card {
-
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-  padding: 30px 32px;
+  padding: 24px 28px;
   border-radius: 30px;
   text-align: center;
   position: relative;
   z-index: 10;
   animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   width: 100%;
-  
-  
+  max-width: 480px;
+  max-height: calc(100vh - 140px);
+  overflow: hidden;
 }
 
 h1 {
-  font-size: 2.8em;
+  font-size: 2.2em;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   color: #fff;
   text-shadow: 0 0 10px rgba(255,255,255,0.5);
   background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  line-height: 1.1;
 }
 
 .tagline {
-  font-size: 1.4em;
+  font-size: 1.1em;
   font-weight: 300;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 32px;
+  margin-bottom: 20px;
   letter-spacing: 0.5px;
+  line-height: 1.3;
 }
 
 /* =========================================
@@ -303,7 +308,7 @@ h1 {
 ========================================= */
 .button-container {
   display: flex;
-  gap: 16px;
+  gap: 12px;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -311,9 +316,10 @@ h1 {
 
 .auth-btn {
   display: inline-block;
-  padding: 14px 32px;
-  font-size: 1.2em;
+  padding: 12px 28px;
+  font-size: 1.1em;
   font-weight: 600;
+  max-height: 50px;
   color: #fff;
   text-decoration: none;
   border-radius: 25px;
@@ -321,17 +327,21 @@ h1 {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  min-width: 120px;
+  min-width: 110px;
   text-align: center;
+  flex: 1;
+  max-width: 200px;
 }
 
 .login-btn {
-  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff, #764ba2);
   background-size: 300% 300%;
+  font-size: 1.2em;
+
   box-shadow: 
-    0 0 15px rgba(102, 126, 234, 0.5),
-    0 0 30px rgba(118, 75, 162, 0.4),
-    0 0 45px rgba(240, 147, 251, 0.3);
+    0 0 15px rgba(242, 197, 249, 0.6),
+    0 0 30px rgba(255, 48, 214, 0.5),
+    0 0 45px rgba(118, 75, 162, 0.4);
 }
 
 .signup-btn {
@@ -400,94 +410,202 @@ h1 {
 }
 
 /* =========================================
-   RESPONSIVE — MOBILE FIRST
+   RESPONSIVE — MOBILE PORTRAIT
 ========================================= */
-@media (max-width: 768px) {
-  body{
-    overflow-y: hidden;
-  }
+@media (max-width: 768px) and (orientation: portrait) {
   .homepage-card { 
     padding: 20px 24px; 
-    margin: 12px; 
+    margin: 8px;
+    max-height: calc(100vh - 120px);
   }
+  
   .content-container { 
-    margin-bottom: 0%;
-    min-height: min-content;
-    padding: 12px 8px
+    padding: 8px;
   }
+  
   h1 { 
     font-size: 1.9em; 
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   
   .tagline { 
     font-size: 1em; 
-    margin-bottom: 20px;
-  }
-  
-  .logo { 
-    height: 45px; 
-  }
-  
-  .app-footer {
-    padding: 3px 0;
-    font-size: 0.9em;
-    margin-bottom: 25%;
-  }
-  
-  .button-container {
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .auth-btn {
-    width: 280px;
-    max-width: 280px;
-    padding: 14px 24px;
-    font-size: 1.1em;
-    line-height: normal;
-  }
-  .auth-btn.signup-btn {
-    font-size: 1.3em;
-  }
-  .glow-particle:nth-child(n+60) { 
-    display: none; 
-  }
-}
-
-@media (max-width: 480px) {
-  .homepage-card { 
-    padding: 18px 20px;
-    margin: 10px;
-  }
-  
-  h1 { 
-    font-size: 1.7em; 
-  }
-  
-  .tagline { 
-    font-size: 0.95em; 
-    margin-bottom: 18px;
-  }
-  
-  .auth-btn {
-    width: 260px;
-    padding: 12px 20px;
-    font-size: 1em;
+    margin-bottom: 16px;
   }
   
   .logo { 
     height: 40px; 
   }
   
-  .glow-particle:nth-child(n+32) { 
+  .app-header, .app-footer {
+    padding: 6px 0;
+  }
+  
+  .app-footer {
+    font-size: 0.8em;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .auth-btn {
+    width: 100%;
+    max-width: 260px;
+    padding: 12px 20px;
+    font-size: 1.1em;
+  }
+  
+  .glow-particle:nth-child(n+40) { 
     display: none; 
   }
 }
 
+/* =========================================
+   RESPONSIVE — MOBILE LANDSCAPE
+========================================= */
+@media (max-width: 768px) and (orientation: landscape) {
+  .app-container {
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .app-header {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: auto;
+    z-index: 20;
+  }
+  
+  .app-footer {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: auto;
+    text-align: right;
+    z-index: 20;
+    font-size: 0.75em;
+  }
+  
+  .content-container {
+    flex: 1;
+    height: 100vh;
+    width: 100%;
+    padding: 60px 12px 40px 12px;
+  }
+  
+  .homepage-card {
+    padding: 16px 20px;
+    max-width: 400px;
+    max-height: calc(100vh - 120px);
+  }
+  
+  h1 {
+    font-size: 1.6em;
+    margin-bottom: 4px;
+  }
+  
+  .tagline {
+    font-size: 0.9em;
+    margin-bottom: 12px;
+  }
+  
+  .button-container {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .auth-btn {
+    padding: 10px 16px;
+    font-size: 0.95em;
+    min-width: 80px;
+    flex: 1;
+  }
+  
+  .logo {
+    height: 30px;
+    margin: 0 8px;
+  }
+  
+  .glow-particle:nth-child(n+30) { 
+    display: none; 
+  }
+}
+
+/* =========================================
+   RESPONSIVE — SMALL MOBILE
+========================================= */
+@media (max-width: 480px) and (orientation: portrait) {
+  .homepage-card { 
+    padding: 16px 20px;
+    margin: 6px;
+  }
+  
+  h1 { 
+    font-size: 1.6em; 
+  }
+  
+  .tagline { 
+    font-size: 0.9em; 
+    margin-bottom: 14px;
+  }
+  
+  .auth-btn {
+    width: 100%;
+    max-width: 240px;
+    padding: 10px 18px;
+    font-size: 1em;
+  }
+  
+  .logo { 
+    height: 35px; 
+  }
+  
+  .glow-particle:nth-child(n+25) { 
+    display: none; 
+  }
+}
+
+/* =========================================
+   RESPONSIVE — TABLET AND DESKTOP
+========================================= */
 @media (min-width: 769px) {
   .homepage-card { 
-    padding: 40px 50px; 
+    padding: 32px 40px;
+    max-width: 520px;
+  }
+  
+  h1 { 
+    font-size: 2.8em; 
+  }
+  
+  .tagline { 
+    font-size: 1.3em; 
+    margin-bottom: 24px;
+  }
+  
+  .logo { 
+    height: 55px; 
+  }
+  
+  .button-container {
+    gap: 16px;
+  }
+  
+  .auth-btn {
+    padding: 14px 32px;
+    font-size: 1.2em;
+    min-width: 140px;
+    flex: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .homepage-card { 
+    padding: 40px 50px;
+    max-width: 580px;
   }
   
   h1 { 
@@ -495,7 +613,8 @@ h1 {
   }
   
   .tagline { 
-    font-size: 1.5em; 
+    font-size: 1.4em; 
+    margin-bottom: 28px;
   }
   
   .logo { 
@@ -509,21 +628,26 @@ h1 {
   .auth-btn {
     padding: 16px 40px;
     font-size: 1.3em;
-    min-width: 140px;
+    min-width: 160px;
   }
 }
 
-@media (min-width: 1024px) {
+/* =========================================
+   EXTRA WIDE SCREENS
+========================================= */
+@media (min-width: 1400px) {
   .homepage-card { 
-    padding: 50px 70px; 
+    padding: 50px 60px;
+    max-width: 640px;
   }
   
   h1 { 
-    font-size: 3.8em; 
+    font-size: 3.6em; 
   }
   
   .tagline { 
-    font-size: 1.7em; 
+    font-size: 1.6em; 
+    margin-bottom: 32px;
   }
   
   .logo { 
@@ -537,6 +661,12 @@ h1 {
   .auth-btn {
     padding: 18px 48px;
     font-size: 1.4em;
-    min-width: 160px;
+    min-width: 180px;
   }
+  .logo-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-items: center;
+}
 }
