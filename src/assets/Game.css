@@ -1,0 +1,380 @@
+/* =========================================
+   BASE SETUP - DITTO FROM YOUR INDEX.CSS
+========================================= */
+.game-app-container {
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #0f0c29,#1e1e3b);
+  background-size: 700% 400%;
+  animation: gradientBG 15s ease infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* =========================================
+   PARTICLES - DITTO FROM YOUR INDEX.CSS
+========================================= */
+.global-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.glow-particle {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #ff30d6; /* Your theme's pink */
+  box-shadow: 0 0 10px #ff30d6, 0 0 20px #ff30d6, 0 0 30px #f2c5f9;
+  opacity: 0;
+  animation: floatGlow 20s linear infinite;
+}
+
+@keyframes floatGlow {
+  0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+  10% { opacity: 0.8; }
+  90% { opacity: 0.8; }
+  100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+}
+
+.glow-particle.tiny { width: 5px; height: 5px; }
+.glow-particle.small { width: 10px; height: 10px; }
+.glow-particle.medium { width: 15px; height: 15px; }
+.glow-particle.large { width: 20px; height: 20px; }
+
+/* =========================================
+   HEADER & NAVIGATION
+========================================= */
+.game-header {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+
+/* =========================================
+   MAIN CONTENT CARD - DITTO FROM LOGIN.CSS
+========================================= */
+.game-content {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.game-card {
+  width: 100%;
+  max-width: 550px;
+  background: rgba(17, 15, 41, 0.6); /* Your dark card background */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 30px 40px;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  text-align: center;
+}
+
+.game-card h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.instructions {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* =========================================
+   INPUT & BUTTONS - DITTO FROM LOGIN.CSS
+========================================= */
+.input-section {
+  display: flex;
+  gap: 10px;
+}
+
+.input-section input {
+  flex-grow: 1;
+  height: 48px;
+  padding: 0 18px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-section input:focus {
+  border-color: #ff30d6;
+  box-shadow: 0 0 15px rgba(255, 48, 214, 0.4);
+}
+/* Updated button styles with glowing effects */
+.nav-btn, .match-btn, .star-yes-btn, .star-no-btn {
+  display: inline-block;
+  padding: 14px 32px;
+  font-size: 1.2em;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 120px;
+  text-align: center;
+  background-size: 300% 300%;
+}
+.input-section.placeholder {
+  color: rgba(255, 149, 211, 0.6);
+  width: 50%;
+}
+/* Navigation buttons */
+.nav-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  box-shadow: 
+    0 0 15px rgba(102, 126, 234, 0.5),
+    0 0 30px rgba(118, 75, 162, 0.4),
+    0 0 45px rgba(240, 147, 251, 0.3);
+}
+
+/* Match button */
+.match-btn {
+  background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff, #764ba2);
+  box-shadow: 
+    0 0 15px rgba(242, 197, 249, 0.6),
+    0 0 30px rgba(255, 48, 214, 0.5),
+    0 0 45px rgba(118, 75, 162, 0.4);
+}
+
+/* Star buttons */
+.star-yes-btn {
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+  box-shadow: 
+    0 0 15px rgba(102, 126, 234, 0.5),
+    0 0 30px rgba(118, 75, 162, 0.4),
+    0 0 45px rgba(240, 147, 251, 0.3);
+}
+
+.star-no-btn {
+  background: linear-gradient(135deg, #333, #555, #777);
+  box-shadow: 
+    0 0 15px rgba(85, 85, 85, 0.5),
+    0 0 30px rgba(119, 119, 119, 0.4);
+}
+
+/* Hover effects */
+.nav-btn:hover, .match-btn:hover, .star-yes-btn:hover, .star-no-btn:hover {
+  animation: shineGradient 2s ease infinite;
+  transform: translateY(-3px) scale(1.05);
+}
+
+.nav-btn:hover, .star-yes-btn:hover {
+  box-shadow: 
+    0 0 25px rgba(102, 126, 234, 0.8),
+    0 0 50px rgba(118, 75, 162, 0.7),
+    0 0 75px rgba(240, 147, 251, 0.6);
+}
+
+.match-btn:hover {
+  box-shadow: 
+    0 0 25px rgba(242, 197, 249, 0.9),
+    0 0 50px rgba(255, 48, 214, 0.8),
+    0 0 75px rgba(118, 75, 162, 0.7);
+}
+
+/* Shine animation */
+@keyframes shineGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Button pulse effect */
+.nav-btn::before, .match-btn::before, .star-yes-btn::before, .star-no-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.nav-btn:hover::before, .match-btn:hover::before, .star-yes-btn:hover::before, .star-no-btn:hover::before {
+  left: 100%;
+}
+
+/* =========================================
+   FRIEND CARD & DECISION BUTTONS
+========================================= */
+.friend-card {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 20px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.friend-card h3 {
+  margin-top: 0;
+  color: #f2c5f9;
+}
+
+.star-question {
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.decision-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.decision-buttons button {
+  flex-grow: 1;
+  height: 45px;
+  font-size: 1em;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+
+.signout-button-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000; /* keep above particles */
+}
+
+.signout-btn {
+  background: rgba(255, 48, 214, 0.2);
+  border: 2px solid rgba(255, 48, 214, 0.5);
+  padding: 10px 20px;
+  border-radius: 25px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signout-btn:hover {
+  background: rgba(255, 48, 214, 0.4);
+  border-color: #ff30d6;
+  box-shadow: 0 0 15px rgba(255, 48, 214, 0.6),
+              0 0 30px rgba(255, 48, 214, 0.8);
+}
+
+/* 🔹 Mobile Responsive FAB style */
+@media (max-width: 768px) {
+  .signout-btn {
+    width: 55px;
+    height: 55px;
+    padding: 0;
+    border-radius: 50%; /* round button */
+    font-size: 0;       /* hide text */
+    background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff);
+    box-shadow: 0 0 15px rgba(255, 48, 214, 0.7),
+                0 0 30px rgba(255, 48, 214, 0.9);
+    position: relative;
+  }
+
+  /* Add a logout icon inside button */
+  .signout-btn::before {
+    content: "⇦";  /* can swap with an icon font/svg */
+    font-size: 22px;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .input-section.placeholder {
+  color: rgba(255, 149, 211, 0.6);
+  width: 50%;
+}
+}
+
+
+/* =========================================
+   FOOTER - PLAYER KEY DISPLAY
+========================================= */
+.player-key-display {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  margin-top: 20px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.player-key-display h2 {
+  margin: 0 0 5px 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.player-key-display p {
+  margin: 0 0 10px 0;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.key-box {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1.1rem;
+  font-weight: 500;
+  word-wrap: break-word;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  user-select: all; /* Make key easily selectable */
+}
+
+/* =========================================
+   UTILITIES
+========================================= */
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.animate-pop-in {
+  animation: popIn 0.5s ease-out forwards;
+}
+
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.9); }
+  100% { opacity: 1; transform: scale(1); }
+}

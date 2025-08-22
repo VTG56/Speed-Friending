@@ -1,0 +1,596 @@
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  color: #ffffff;
+  overflow-x: hidden;
+  background: #0b0920;
+}
+
+/* =========================================
+   ANIMATED BACKGROUND GRADIENT
+========================================= */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(-45deg, #0f0c29, #1e1e3b);
+  background-size: 700% 400%;
+  animation: gradientBG 15s ease infinite;
+  position: relative;
+  z-index: 0;
+}
+
+@keyframes gradientBG {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* =========================================
+   GLOWING FLOATING PARTICLES
+========================================= */
+.global-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.glow-particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: floatGlow linear infinite;
+}
+
+.glow-particle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: inherit;
+  box-shadow: inherit;
+  animation: glowPulse 4s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+/* Size Variants + color gradients */
+.glow-particle.tiny {
+  width: 2px; height: 2px;
+  background: radial-gradient(circle, rgba(253, 86, 211, 1) 0%, rgba(253, 86, 211, 0.8) 30%, rgba(135,206,250,0.6) 70%, transparent 100%);
+  box-shadow:
+    0 0 8px rgba(253, 86, 211, 1),
+    0 0 16px rgba(253, 86, 211, 0.8),
+    0 0 24px rgba(122, 199, 247, 0.6),
+    0 0 32px rgba(106, 186, 235, 0.4),
+    inset 0 0 4px rgba(255, 255, 255, 0.8);
+}
+.glow-particle.tiny::after { animation-duration: 3s; }
+
+.glow-particle.small {
+  width: 3px; height: 3px;
+  background: radial-gradient(circle, rgba(92, 86, 252, 1) 0%, rgba(92, 86, 252, 0.8) 30%, rgba(100,200,255,0.6) 70%, transparent 100%);
+  box-shadow:
+    0 0 10px rgba(92, 86, 252, 1),
+    0 0 20px rgba(92, 86, 252, 0.8),
+    0 0 30px rgba(100,200,255, 0.7),
+    0 0 40px rgba(100,200,255, 0.5),
+    inset 0 0 6px rgba(255, 255, 255, 0.9);
+}
+.glow-particle.small::after { animation-duration: 3.5s; }
+
+.glow-particle.medium {
+  width: 4px; height: 4px;
+  background: radial-gradient(circle, rgba(255, 73, 73, 1) 0%, rgba(255, 73, 73, 0.9) 30%, rgba(255, 150, 150, 0.7) 70%, transparent 100%);
+  box-shadow:
+    0 0 12px rgba(255, 73, 73, 1),
+    0 0 24px rgba(255, 73, 73, 0.9),
+    0 0 36px rgba(255, 100, 100, 0.7),
+    0 0 48px rgba(255, 150, 150, 0.5),
+    inset 0 0 8px rgba(255, 255, 255, 1);
+}
+.glow-particle.medium::after { animation-duration: 4s; }
+
+.glow-particle.large {
+  width: 5px; height: 5px;
+  background: radial-gradient(circle, rgba(255, 247, 101, 1) 0%, rgba(255, 247, 101, 0.9) 30%, rgba(255, 220, 120, 0.7) 70%, transparent 100%);
+  box-shadow:
+    0 0 15px rgba(255, 247, 101, 1),
+    0 0 30px rgba(255, 247, 101, 0.9),
+    0 0 45px rgba(255, 220, 120, 0.8),
+    0 0 60px rgba(255, 200, 255, 0.6),
+    inset 0 0 10px rgba(255, 255, 255, 1);
+}
+.glow-particle.large::after { animation-duration: 4.5s; }
+
+.glow-particle.extra-large {
+  width: 7px; height: 7px;
+  background: radial-gradient(circle, rgb(144, 255, 80) 0%, rgba(144, 255, 80, 0.9) 30%, rgba(180, 255, 120, 0.7) 70%, transparent 100%);
+  box-shadow:
+    0 0 18px rgb(144, 255, 80),
+    0 0 36px rgba(144, 255, 80, 0.9),
+    0 0 54px rgba(180, 255, 120, 0.8),
+    0 0 72px rgba(230, 255, 69, 0.6),
+    0 0 90px rgba(255, 255, 100, 0.4),
+    inset 0 0 12px rgba(255, 255, 255, 1);
+}
+.glow-particle.extra-large::after { animation-duration: 5s; }
+
+/* Float path */
+@keyframes floatGlow {
+  0%   { transform: translateY(100vh) translateX(0px)   scale(0.5); opacity: 0; }
+  5%   { opacity: 1; }
+  15%  { transform: translateY(85vh) translateX(10px)  scale(0.8); }
+  30%  { transform: translateY(70vh) translateX(-5px)  scale(1); }
+  50%  { transform: translateY(50vh) translateX(15px)  scale(1.1); }
+  70%  { transform: translateY(30vh) translateX(-10px) scale(0.9); }
+  85%  { transform: translateY(15vh) translateX(20px)  scale(1); }
+  95%  { opacity: 1; }
+  100% { transform: translateY(-10vh) translateX(30px) scale(0.3); opacity: 0; }
+}
+
+/* Glow pulsing */
+@keyframes glowPulse {
+  0%   { filter: brightness(1)   saturate(1);   transform: scale(1); }
+  50%  { filter: brightness(1.3) saturate(1.5); transform: scale(1.1); }
+  100% { filter: brightness(1.6) saturate(2);   transform: scale(1.2); }
+}
+
+/* Ultra Bright Mode */
+.ultra-bright .glow-particle { filter: brightness(2) saturate(2) contrast(1.5) !important; }
+.ultra-bright .glow-particle.tiny {
+  box-shadow:
+    0 0 15px rgba(253, 86, 211, 1),
+    0 0 30px rgba(253, 86, 211, 0.9),
+    0 0 45px rgba(122, 199, 247, 0.8),
+    0 0 60px rgba(106, 186, 235, 0.6);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .global-particles, .glow-particle { display: none; }
+}
+
+/* =========================================
+   CONTENT CONTAINER
+========================================= */
+.app-footer {
+  z-index: 10;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+  padding: 5px 0;
+  font-size: 1em;
+  color: rgba(255, 255, 255, 0.6);
+}
+.app-header, .app-footer {
+  z-index: 10;
+  width: 100%;
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+}
+
+.app-header { padding: 0; }
+
+.logo {
+  height: 70px;
+  margin: 0 15px;
+  vertical-align: middle;
+}
+
+.content-container {
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  width: 100%;
+  padding: 20px 16px;
+}
+
+/* =========================================
+   SIGNUP GLASSMORPHISM CARD
+========================================= */
+.signup-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  padding: 40px 32px;
+  border-radius: 30px;
+  text-align: center;
+  align-content: center;
+  position: relative;
+  z-index: 10;
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  max-width: 450px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2.5em;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255,255,255,0.5);
+  background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.tagline {
+  font-size: 1.2em;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 32px;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================
+   FORM STYLES
+========================================= */
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: left;
+}
+
+.input-group {
+  position: relative;
+  display: flex;
+  padding: 4px;
+  flex-direction: column;
+}
+
+.input-group input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 16px 20px;
+  font-size: 1em;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-group label {
+  position: absolute;
+  left: 20px;
+  top: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1em;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background: transparent;
+  padding: 0 8px;
+}
+
+/* Floating label effect */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -12px;
+  left: 12px;
+  font-size: 0.85em;
+  color: #f2c5f9ff;
+  background: rgba(15, 12, 41, 0.8);
+  border-radius: 8px;
+}
+
+.input-group input:focus {
+  border: 1px solid rgba(242, 197, 249, 0.5);
+  box-shadow: 
+    0 0 20px rgba(242, 197, 249, 0.3),
+    0 0 40px rgba(255, 48, 214, 0.2),
+    inset 0 0 20px rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.input-group input::placeholder {
+  color: transparent;
+}
+.logo-container {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.logo {
+    height: 60px;
+    width: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+/* =========================================
+   SIGNUP BUTTON
+========================================= */
+.signup-btn {
+  background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff, #764ba2);
+  background-size: 300% 300%;
+  border: none;
+  border-radius: 25px;
+  padding: 16px 32px;
+  font-size: 1.2em;
+  margin-top: 5px;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 0 15px rgba(242, 197, 249, 0.6),
+    0 0 30px rgba(255, 48, 214, 0.5),
+    0 0 45px rgba(118, 75, 162, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.signup-btn:hover {
+  animation: shineGradient 2s ease infinite;
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 
+    0 0 25px rgba(242, 197, 249, 0.9),
+    0 0 50px rgba(255, 48, 214, 0.8),
+    0 0 75px rgba(118, 75, 162, 0.7);
+}
+
+.signup-btn:active {
+  transform: translateY(-1px) scale(1.02);
+}
+
+.signup-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  animation: none;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  display: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.signup-btn.loading .loading-spinner {
+  display: block;
+}
+
+.signup-btn.loading span {
+  opacity: 0.7;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes shineGradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Button pulse effect */
+.signup-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.signup-btn:hover::before {
+  left: 100%;
+}
+
+/* =========================================
+   ERROR MESSAGE
+========================================= */
+.error-message {
+  display: none;
+  background: rgba(255, 73, 73, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 73, 73, 0.3);
+  border-radius: 15px;
+  padding: 12px 16px;
+  color: #ff6b6b;
+  font-size: 0.9em;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 73, 73, 0.2);
+  animation: errorSlideIn 0.3s ease-out;
+}
+
+.error-message.show {
+  display: block;
+}
+
+@keyframes errorSlideIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   LOGIN LINK
+========================================= */
+.login-link {
+  margin-top: 24px;
+  font-size: 0.95em;
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+}
+
+.login-link a {
+  color: #f2c5f9ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.login-link a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 50%;
+  background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff);
+  transition: all 0.3s ease;
+}
+
+.login-link a:hover {
+  color: #ff30d6ff;
+  text-shadow: 0 0 10px rgba(255, 48, 214, 0.5);
+}
+
+.login-link a:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; } 
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(50px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================================
+   RESPONSIVE – MOBILE FIRST
+========================================= */
+@media (max-width: 768px) {
+  .signup-card { 
+    padding: 32px 24px; 
+    margin: 16px; 
+    max-width: none;
+  }
+  
+  h1 { 
+    font-size: 2.2em; 
+  }
+  
+  .tagline { 
+    font-size: 1.1em; 
+    margin-bottom: 28px;
+  }
+  
+  .input-group input {
+    padding: 14px 18px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  .signup-btn {
+    padding: 16px 24px;
+    font-size: 1.1em;
+  }
+  
+  .glow-particle:nth-child(n+21) { 
+    display: none; 
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-card { 
+    padding: 28px 20px;
+    margin: 12px;
+  }
+  
+  h1 { 
+    font-size: 1.9em; 
+  }
+  
+  .tagline { 
+    font-size: 1em; 
+    margin-bottom: 24px;
+  }
+  
+  .signup-form {
+    gap: 20px;
+  }
+  
+  .input-group input {
+    padding: 14px 16px;
+  }
+  
+  .signup-btn {
+    padding: 14px 20px;
+    font-size: 1em;
+  }
+  
+  .glow-particle:nth-child(n+16) { 
+    display: none; 
+  }
+}
+
+@media (min-width: 768px) {
+  .signup-card { 
+    padding: 50px 40px; 
+  }
+  
+  h1 { 
+    font-size: 2.8em; 
+  }
+  
+  .tagline { 
+    font-size: 1.3em; 
+  }
+  
+  .input-group input {
+    padding: 18px 24px;
+    font-size: 1.1em;
+  }
+  
+  .signup-btn {
+    padding: 18px 40px;
+    font-size: 1.3em;
+  }
+}
+
+@media (min-width: 1024px) {
+  .signup-card { 
+    padding: 60px 50px; 
+  }
+  
+  h1 { 
+    font-size: 3.2em; 
+  }
+  
+  .tagline { 
+    font-size: 1.4em; 
+  }
+}
