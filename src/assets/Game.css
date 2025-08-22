@@ -1,13 +1,16 @@
 /* =========================================
-   BASE SETUP - DITTO FROM YOUR INDEX.CSS
+   MOBILE FIRST APPROACH - BASE STYLES
 ========================================= */
 .game-app-container {
   min-height: 100vh;
-  background: linear-gradient(-45deg, #0f0c29,#1e1e3b);
+  background: linear-gradient(-45deg, #0f0c29, #1e1e3b);
   background-size: 700% 400%;
   animation: gradientBG 15s ease infinite;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
 }
 
 @keyframes gradientBG {
@@ -17,7 +20,7 @@
 }
 
 /* =========================================
-   PARTICLES - DITTO FROM YOUR INDEX.CSS
+   PARTICLES - SAME AS BEFORE
 ========================================= */
 .global-particles {
   position: fixed;
@@ -32,7 +35,7 @@
 .glow-particle {
   position: absolute;
   border-radius: 50%;
-  background-color: #ff30d6; /* Your theme's pink */
+  background-color: #ff30d6;
   box-shadow: 0 0 10px #ff30d6, 0 0 20px #ff30d6, 0 0 30px #f2c5f9;
   opacity: 0;
   animation: floatGlow 20s linear infinite;
@@ -51,86 +54,107 @@
 .glow-particle.large { width: 20px; height: 20px; }
 
 /* =========================================
-   HEADER & NAVIGATION
+   HEADER & NAVIGATION - MOBILE FIRST
 ========================================= */
 .game-header {
   width: 100%;
-  max-width: 1200px;
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 10px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
 }
 
-
 /* =========================================
-   MAIN CONTENT CARD - DITTO FROM LOGIN.CSS
+   MAIN CONTENT - MOBILE OPTIMIZED
 ========================================= */
 .game-content {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   width: 100%;
+  margin-bottom: 15px;
 }
 
 .game-card {
   width: 100%;
-  max-width: 550px;
-  background: rgba(17, 15, 41, 0.6); /* Your dark card background */
+  max-width: 100%;
+  background: rgba(17, 15, 41, 0.6);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 30px 40px;
+  padding: 25px 20px;
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   text-align: center;
 }
 
+.welcome-section {
+  margin-bottom: 25px;
+}
+
 .game-card h1 {
-  font-size: 2.5rem;
+  font-size: 2rem;
   font-weight: 700;
   margin-bottom: 10px;
   color: #fff;
+  line-height: 1.2;
+}
+
+.game-card h2 {
+  color: #f2c5f9;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 .instructions {
   color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 30px;
-  line-height: 1.5;
+  margin-bottom: 25px;
+  line-height: 1.4;
+  font-size: 1rem;
 }
 
 /* =========================================
-   INPUT & BUTTONS - DITTO FROM LOGIN.CSS
+   INPUT & BUTTONS - MOBILE OPTIMIZED
 ========================================= */
 .input-section {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
 }
 
 .input-section input {
-  flex-grow: 1;
-  height: 48px;
+  width: 100%;
+  height: 50px;
   padding: 0 18px;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
   color: #fff;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
+  border-radius: 12px;
   transition: all 0.3s ease;
   outline: none;
+  box-sizing: border-box;
 }
 
 .input-section input:focus {
   border-color: #ff30d6;
   box-shadow: 0 0 15px rgba(255, 48, 214, 0.4);
 }
-/* Updated button styles with glowing effects */
+
+.input-section input::placeholder {
+  color: rgba(255, 149, 211, 0.6);
+}
+
+/* Base button styles - MOBILE FIRST */
 .nav-btn, .match-btn, .star-yes-btn, .star-no-btn {
   display: inline-block;
-  padding: 14px 32px;
-  font-size: 1.2em;
+  padding: 14px 20px;
+  font-size: 1rem;
   font-weight: 600;
   color: #fff;
   text-decoration: none;
@@ -140,14 +164,12 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  min-width: 120px;
+  min-width: 100px;
   text-align: center;
   background-size: 300% 300%;
+  box-sizing: border-box;
 }
-.input-section.placeholder {
-  color: rgba(255, 149, 211, 0.6);
-  width: 50%;
-}
+
 /* Navigation buttons */
 .nav-btn {
   background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
@@ -164,6 +186,7 @@
     0 0 15px rgba(242, 197, 249, 0.6),
     0 0 30px rgba(255, 48, 214, 0.5),
     0 0 45px rgba(118, 75, 162, 0.4);
+  width: 100%;
 }
 
 /* Star buttons */
@@ -185,7 +208,7 @@
 /* Hover effects */
 .nav-btn:hover, .match-btn:hover, .star-yes-btn:hover, .star-no-btn:hover {
   animation: shineGradient 2s ease infinite;
-  transform: translateY(-3px) scale(1.05);
+  transform: translateY(-2px) scale(1.02);
 }
 
 .nav-btn:hover, .star-yes-btn:hover {
@@ -231,7 +254,7 @@
 }
 
 /* =========================================
-   FRIEND CARD & DECISION BUTTONS
+   FRIEND CARD - MOBILE OPTIMIZED
 ========================================= */
 .friend-card {
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -243,121 +266,126 @@
 
 .friend-card h3 {
   margin-top: 0;
+  margin-bottom: 15px;
   color: #f2c5f9;
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.friend-card p {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+  text-align: left;
 }
 
 .star-question {
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 5px;
   font-weight: 500;
+  color: #f2c5f9;
+  font-size: 1.1rem;
+  text-align: center;
 }
 
 .decision-buttons {
   display: flex;
-  gap: 15px;
-  margin-top: 15px;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .decision-buttons button {
-  flex-grow: 1;
-  height: 45px;
-  font-size: 1em;
+  flex: 1;
+  height: 48px;
+  font-size: 0.95rem;
   font-weight: 600;
-  border-radius: 8px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   border: none;
 }
 
-
+/* =========================================
+   SIGN OUT BUTTON - MOBILE OPTIMIZED
+========================================= */
 .signout-button-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 1000; /* keep above particles */
+  bottom: 15px;
+  right: 15px;
+  z-index: 1000;
 }
 
 .signout-btn {
-  background: rgba(255, 48, 214, 0.2);
+  width: 55px;
+  height: 55px;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0;
+  background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff);
+  box-shadow: 
+    0 0 15px rgba(255, 48, 214, 0.7),
+    0 0 30px rgba(255, 48, 214, 0.9);
+  position: relative;
   border: 2px solid rgba(255, 48, 214, 0.5);
-  padding: 10px 20px;
-  border-radius: 25px;
-  color: #fff;
-  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
+.signout-btn::before {
+  content: "⇦";
+  font-size: 22px;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .signout-btn:hover {
-  background: rgba(255, 48, 214, 0.4);
-  border-color: #ff30d6;
-  box-shadow: 0 0 15px rgba(255, 48, 214, 0.6),
-              0 0 30px rgba(255, 48, 214, 0.8);
+  background: linear-gradient(135deg, #ff30d6ff, #f2c5f9ff);
+  box-shadow: 
+    0 0 25px rgba(255, 48, 214, 0.9),
+    0 0 50px rgba(255, 48, 214, 1);
+  transform: scale(1.1);
 }
-
-/* 🔹 Mobile Responsive FAB style */
-@media (max-width: 768px) {
-  .signout-btn {
-    width: 55px;
-    height: 55px;
-    padding: 0;
-    border-radius: 50%; /* round button */
-    font-size: 0;       /* hide text */
-    background: linear-gradient(135deg, #f2c5f9ff, #ff30d6ff);
-    box-shadow: 0 0 15px rgba(255, 48, 214, 0.7),
-                0 0 30px rgba(255, 48, 214, 0.9);
-    position: relative;
-  }
-
-  /* Add a logout icon inside button */
-  .signout-btn::before {
-    content: "⇦";  /* can swap with an icon font/svg */
-    font-size: 22px;
-    color: #fff;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-  .input-section.placeholder {
-  color: rgba(255, 149, 211, 0.6);
-  width: 50%;
-}
-}
-
 
 /* =========================================
-   FOOTER - PLAYER KEY DISPLAY
+   FOOTER - MOBILE OPTIMIZED
 ========================================= */
 .player-key-display {
   width: 100%;
-  max-width: 600px;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 20px 15px;
+  margin-top: auto;
   text-align: center;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px 15px 0 0;
 }
 
 .player-key-display h2 {
   margin: 0 0 5px 0;
   font-size: 1.2rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: #f2c5f9;
 }
 
 .player-key-display p {
-  margin: 0 0 10px 0;
+  margin: 0 0 15px 0;
   color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
 }
 
 .key-box {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 1.1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  padding: 15px 12px;
+  font-size: 1rem;
   font-weight: 500;
   word-wrap: break-word;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  user-select: all; /* Make key easily selectable */
+  user-select: all;
+  color: #fff;
+  letter-spacing: 0.5px;
 }
 
 /* =========================================
@@ -377,4 +405,138 @@ button:disabled {
 @keyframes popIn {
   0% { opacity: 0; transform: scale(0.9); }
   100% { opacity: 1; transform: scale(1); }
+}
+
+/* =========================================
+   DESKTOP IMPROVEMENTS (TABLET AND UP)
+========================================= */
+@media (min-width: 768px) {
+  .game-app-container {
+    padding: 30px;
+    align-items: center;
+  }
+  
+  .game-header {
+    margin-bottom: 30px;
+    gap: 20px;
+  }
+  
+  .game-card {
+    max-width: 600px;
+    padding: 40px 45px;
+  }
+  
+  .game-card h1 {
+    font-size: 2.8rem;
+  }
+  
+  .game-card h2 {
+    font-size: 2rem;
+  }
+  
+  .instructions {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+  }
+  
+  .input-section {
+    flex-direction: row;
+    gap: 20px;
+  }
+  
+  .input-section input {
+    height: 55px;
+    font-size: 1.1rem;
+    padding: 0 22px;
+  }
+  
+  .nav-btn, .match-btn, .star-yes-btn, .star-no-btn {
+    padding: 16px 35px;
+    font-size: 1.1rem;
+    min-width: 140px;
+  }
+  
+  .friend-card {
+    padding: 30px;
+    margin-top: 30px;
+  }
+  
+  .friend-card h3 {
+    font-size: 1.6rem;
+  }
+  
+  .friend-card p {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+  
+  .decision-buttons {
+    gap: 20px;
+    margin-top: 25px;
+  }
+  
+  .decision-buttons button {
+    height: 55px;
+    font-size: 1.1rem;
+  }
+  
+  .player-key-display {
+    max-width: 650px;
+    padding: 25px;
+  }
+  
+  .player-key-display h2 {
+    font-size: 1.4rem;
+  }
+  
+  .player-key-display p {
+    font-size: 1rem;
+  }
+  
+  .key-box {
+    font-size: 1.2rem;
+    padding: 18px;
+  }
+  
+  /* Desktop sign out button */
+  .signout-btn {
+    width: auto;
+    height: auto;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
+    background: rgba(255, 48, 214, 0.2);
+    border: 2px solid rgba(255, 48, 214, 0.5);
+  }
+  
+  .signout-btn::before {
+    content: "Sign Out";
+    font-size: 1rem;
+    position: static;
+    transform: none;
+  }
+  
+  .signout-btn:hover {
+    background: rgba(255, 48, 214, 0.4);
+    border-color: #ff30d6;
+    transform: scale(1.05);
+  }
+}
+
+/* =========================================
+   LARGE DESKTOP IMPROVEMENTS
+========================================= */
+@media (min-width: 1024px) {
+  .game-card {
+    max-width: 700px;
+    padding: 50px 60px;
+  }
+  
+  .game-card h1 {
+    font-size: 3rem;
+  }
+  
+  .game-card h2 {
+    font-size: 2.2rem;
+  }
 }

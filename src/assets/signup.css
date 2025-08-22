@@ -212,11 +212,11 @@ body {
   align-content: center;
   position: relative;
   z-index: 10;
+  justify-content: center;
   animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   max-width: 450px;
   width: 100%;
 }
-
 h1 {
   font-size: 2.5em;
   font-weight: 700;
@@ -325,6 +325,7 @@ h1 {
   border: none;
   border-radius: 25px;
   padding: 16px 32px;
+  width: 100%;
   font-size: 1.2em;
   margin-top: 5px;
   font-weight: 600;
@@ -381,6 +382,27 @@ h1 {
 
 .signup-btn.loading span {
   opacity: 0.7;
+}
+/* Password eye toggle */
+.password-group {
+  position: relative;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.6);
+  user-select: none;
+  transition: 0.2s ease;
+}
+
+.eye-icon:hover {
+  color: #ff30d6ff;
+  text-shadow: 0 0 5px rgba(255, 48, 214, 0.7);
 }
 
 @keyframes spin {
@@ -550,6 +572,7 @@ h1 {
   .signup-btn {
     padding: 14px 20px;
     font-size: 1em;
+    width: 100%;
   }
   
   .glow-particle:nth-child(n+16) { 

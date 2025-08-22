@@ -13,7 +13,7 @@ const Particles = () => {
       const left = Math.random() * 100;
       const top = Math.random() * 100;
       const duration = 15 + Math.random() * 25; // 20-45s for slower movement
-      const delay = Math.random();
+      const delay = Math.random()*0.4;
       const startFrom = 'bottom';
       
       particles.push({
@@ -33,7 +33,7 @@ const Particles = () => {
       const left = Math.random() * 100;
       const top = 40 + Math.random() * 20; // Start between 40-60% of screen height
       const duration = 20 + Math.random() * 20; // Slightly faster
-      const delay = Math.random();
+      const delay = Math.random()*0.3;
       const startFrom = 'middle';
       
       particles.push({
@@ -206,17 +206,18 @@ const Particles = () => {
         ))}
         
         {/* Add some ambient background particles */}
-        {Array.from({ length: 15 }, (_, i) => (
-          <div
-            key={`ambient-${i}`}
-            className="ambient-particle"
-            style={{
-              top: `${Math.random() * 100}%`,
-              animationDuration: `${30 + Math.random() * 20}s`,
-              animationDelay: `${Math.random()}s`,
-            }}
-          />
-        ))}
+        {/* Add some ambient background particles */}
+{Array.from({ length: 15 }, (_, i) => (
+  <div
+    key={`ambient-${i}`}
+    className="ambient-particle"
+    style={{
+      top: `${Math.random() * 100}%`,
+      animationDuration: `${30 + Math.random() * 20}s`,
+      animationDelay: `${i * 0.2}s`, // Staggered start
+    }}
+  />
+))}
       </div>
     </>
   );

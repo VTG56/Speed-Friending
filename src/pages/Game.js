@@ -250,7 +250,7 @@ export default function Game() {
             {playerKey || "Loading your key..."}
           </div>
       </footer>
-      <div classname = "signout-button-container">
+      <div className = "signout-button-container">
     <button className="signout-btn" onClick={handleSignOut}>Sign Out</button>  
     </div>
     </div>

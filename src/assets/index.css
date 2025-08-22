@@ -403,62 +403,81 @@ h1 {
    RESPONSIVE — MOBILE FIRST
 ========================================= */
 @media (max-width: 768px) {
+  body{
+    overflow-y: hidden;
+  }
   .homepage-card { 
-    padding: 28px 24px; 
-    margin: 16px; 
+    padding: 20px 24px; 
+    margin: 12px; 
   }
   .content-container { 
+    margin-bottom: 0%;
     min-height: min-content;
-    padding: 16px 8px; 
+    padding: 12px 8px
   }
   h1 { 
-    font-size: 2.2em; 
+    font-size: 1.9em; 
+    margin-bottom: 8px;
   }
   
   .tagline { 
-    font-size: 1.1em; 
-    margin-bottom: 28px;
+    font-size: 1em; 
+    margin-bottom: 20px;
   }
   
   .logo { 
-    height: 50px; 
+    height: 45px; 
+  }
+  
+  .app-footer {
+    padding: 3px 0;
+    font-size: 0.9em;
+    margin-bottom: 25%;
   }
   
   .button-container {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
   
   .auth-btn {
-    width: 100%;
+    width: 280px;
     max-width: 280px;
-    padding: 16px 24px;
+    padding: 14px 24px;
     font-size: 1.1em;
+    line-height: normal;
   }
-  
-  .glow-particle:nth-child(n+40) { 
+  .auth-btn.signup-btn {
+    font-size: 1.3em;
+  }
+  .glow-particle:nth-child(n+60) { 
     display: none; 
   }
 }
 
 @media (max-width: 480px) {
   .homepage-card { 
-    padding: 24px 20px;
-    margin: 12px;
+    padding: 18px 20px;
+    margin: 10px;
   }
   
   h1 { 
-    font-size: 1.8em; 
+    font-size: 1.7em; 
   }
   
   .tagline { 
-    font-size: 1em; 
-    margin-bottom: 24px;
+    font-size: 0.95em; 
+    margin-bottom: 18px;
   }
   
   .auth-btn {
-    padding: 14px 20px;
+    width: 260px;
+    padding: 12px 20px;
     font-size: 1em;
+  }
+  
+  .logo { 
+    height: 40px; 
   }
   
   .glow-particle:nth-child(n+32) { 
@@ -466,7 +485,7 @@ h1 {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   .homepage-card { 
     padding: 40px 50px; 
   }

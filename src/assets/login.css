@@ -237,11 +237,12 @@ body {
     display: flex;
     gap: 20px;
     align-items: center;
+    justify-items: center;
 }
 
 .logo {
     height: 50px; /* Adjusted for a better mobile view */
-    width: auto;
+    max-width: fit-content;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
@@ -267,7 +268,6 @@ body {
   z-index: 10;
   animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   max-width: 450px;
-  width: 100%;
   /* Remove any external margins */
   margin: 0; 
 }
@@ -546,6 +546,39 @@ p{
     .footer {
         bottom: 15px;
         font-size: 12px;
+    }
+}
+@media (max-width: 786px) {
+    .login-card {
+        padding: 30px 20px;
+        margin: 10px;
+        margin-top: 35%;
+    }
+    
+    .login-title {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+    }
+    
+    .logo {
+        height: 50px;
+    }
+    
+    .logo-container {
+        gap: 15px;
+        margin-bottom: 2px;
+        margin-left: 20px;
+    }
+    
+    .header {
+        top: 20px;
+    }
+    
+    .footer {
+        bottom: 15px;
+        color: rgba(255, 255, 255, 1);
+        font-size: 1em;
+        margin-bottom: 22%;
     }
 }
 

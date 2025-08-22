@@ -7,6 +7,7 @@ import Particles from '../components/Particles';
 import rvceLogo from '../assets/rvce-logo.png';
 import ccLogo from '../assets/cc-logo.png';
 
+
 const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -14,6 +15,7 @@ const SignupPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
 
   const handleSignup = async (e) => {
     e.preventDefault();

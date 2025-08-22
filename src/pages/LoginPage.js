@@ -77,7 +77,7 @@ const LoginPage = () => {
           <img src={rvceLogo} alt="RVCE Logo" className="logo" />
           <img src={ccLogo} alt="CC Logo" className="logo" />
         </div>
-        <p>&copy; RVCE SIP 2025</p>
+         © RVCE SIP 2025
       </footer>
     </div>
   );

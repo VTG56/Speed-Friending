@@ -72,12 +72,12 @@ export default function StarredFriends() {
       const hobby = friend.hobby || 'N/A';
       
       return `${index + 1}. ${fullName}
-   • From: ${state}
-   • Club: ${club}
-   • Hobby: ${hobby}`;
+   - is from: ${state}
+   - club interest : ${club}
+   - hobby is : ${hobby}`;
     }).join('\n\n');
 
-    const finalContent = `⭐ My Starred Friends List\n\n${content}\n\n✨ Downloaded from SpeedFriending App`;
+    const finalContent = ` My Starred Friends List\n\n${content}\n\n -Downloaded from SpeedFriending App`;
 
     const blob = new Blob([finalContent], { type: 'text/plain;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
