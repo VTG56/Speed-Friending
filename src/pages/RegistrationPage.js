@@ -157,12 +157,12 @@ function Registration() {
         .replace(/[^a-zA-Z\s]/g, '') // Only letters and spaces
         .replace(/\+/g, ''); // Remove + characters
       
-      const sanitizedClubPreference = sanitizeForKey(formData.clubPreference);
-      const sanitizedHobby = sanitizeForKey(formData.hobby);
-      const upperStateCode = formData.stateCode.toUpperCase();
+      const sanitizedClubPreference = sanitizeForKey(formData.clubPreference).toLowerCase();
+const sanitizedHobby = sanitizeForKey(formData.hobby).toLowerCase();
+const upperStateCode = formData.stateCode.toUpperCase();
 
       // Generate key string
-      const keyString = `${sanitizedFirstName}+${upperStateCode}+${sanitizedClubPreference}+${sanitizedHobby}`;
+      const keyString = `${sanitizedFirstName.toLowerCase()}+${upperStateCode}+${sanitizedClubPreference}+${sanitizedHobby}`;
 
       // Save student in class -> students
       await addDoc(studentsColRef(formData.selectedClass), {
