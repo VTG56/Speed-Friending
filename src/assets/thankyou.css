@@ -240,6 +240,7 @@ body {
 .app-footer {
   padding: 5px 0;
   font-size: 1em;
+  margin-bottom: 20%;
   color: rgba(255, 255, 255, 0.6);
 }
 
@@ -250,7 +251,7 @@ body {
   align-items: center;
   flex-grow: 1;
   width: 100%;
-  padding: 16px 16px 24px;
+  padding: 16px 16px 0px;
 }
 
 /* Glassmorphism Card */
@@ -262,6 +263,8 @@ body {
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   padding: 20px 24px;
   border-radius: 30px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   text-align: center;
   position: relative;
   z-index: 10;
@@ -269,7 +272,7 @@ body {
 }
 
 h1 {
-  font-size: 2.2em;
+  font-size: 1em;
   font-weight: 700;
   margin-bottom: 8px;
   color: #fff;
@@ -333,6 +336,7 @@ p {
   p  { font-size: 1.1em; }
   .logo { height: 50px; }
   .glow-particle:nth-child(n+26) { display: none; }
+  .app-footer{margin-bottom: 60px;}
 }
 
 @media (max-width: 480px) {

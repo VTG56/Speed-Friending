@@ -53,32 +53,64 @@ export default function Game() {
   };
 
   // Fetch the current player's data from localStorage
-  const fetchPlayerData = useCallback(() => {
-    const keyFromStorage = localStorage.getItem('playerKey');
-    const nameFromStorage = localStorage.getItem('playerFullName');
-    const classFromStorage = localStorage.getItem('selectedClass');
-    
-    if (keyFromStorage) {
-      setPlayerKey(keyFromStorage);
-    }
-    if (nameFromStorage) {
-      setPlayerFullName(nameFromStorage);
-    }
-    if (classFromStorage) {
-      setSelectedClass(classFromStorage);
-    }
-  }, []);
+  const fetchPlayerData = useCallback(async () => {
+  const keyFromStorage = localStorage.getItem('playerKey');
+  const nameFromStorage = localStorage.getItem('playerFullName');
+  const classFromStorage = localStorage.getItem('selectedClass');
 
-  useEffect(() => {
+  // If data is already in localStorage, use it.
+  if (keyFromStorage && nameFromStorage && classFromStorage) {
+    setPlayerKey(keyFromStorage);
+    setPlayerFullName(nameFromStorage);
+    setSelectedClass(classFromStorage);
+    return; // Exit the function
+  }
+  
+  // Otherwise, if a user is logged in, fetch from Firestore.
+  if (auth.currentUser) {
+    console.log("localStorage is empty. Fetching player data from Firestore...");
+    try {
+      const userRef = userDocRef(auth.currentUser.uid);
+      const userSnap = await getDoc(userRef);
+
+      if (userSnap.exists()) {
+        const userData = userSnap.data();
+        const fullName = `${userData.firstName || ''} ${userData.lastName || ''}`.trim();
+
+        // Update state with the fetched data
+        setPlayerKey(userData.playerKey || '');
+        setPlayerFullName(fullName);
+        setSelectedClass(userData.selectedClass || '');
+
+        // IMPORTANT: Save the fetched data back to localStorage for the next session
+        localStorage.setItem('playerKey', userData.playerKey || '');
+        localStorage.setItem('playerFullName', fullName);
+        localStorage.setItem('selectedClass', userData.selectedClass || '');
+      } else {
+        // This handles cases where a user might exist but hasn't registered
+        console.warn("User document not found. Redirecting to registration.");
+        navigate('/profile'); // or '/registration'
+      }
+    } catch (error) {
+      console.error("Failed to fetch player data:", error);
+      showNotification("Could not load your profile.", "error");
+    }
+  }
+}, [navigate]); // remove 'currentUser' from here as we use auth.currentUser directly
+
+// Replace the useEffect that calls fetchPlayerData
+useEffect(() => {
+  if (auth.currentUser) {
     fetchPlayerData();
-  }, [fetchPlayerData]);
+  }
+}, [fetchPlayerData]); // Run only when the function is created
+
 
   // --- SIGN OUT FUNCTION ---
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      // Clear localStorage
-      localStorage.clear();
+      
       navigate('/'); // Redirect to homepage after sign out
     } catch (error) {
       console.error("Failed to sign out:", error);

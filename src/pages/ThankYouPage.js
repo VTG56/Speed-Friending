@@ -109,7 +109,7 @@ function ThankYouPage() {
           fontSize: '1.2em',
           color: 'rgba(255,255,255,0.85)'
         }}>
-          You're all set to join the game. LESS GOOO!!!!!
+          You're all set to join the game.
         </p>
       </header>
 
@@ -133,10 +133,12 @@ function ThankYouPage() {
           boxShadow: '0 8px 32px rgba(0,0,0,0.35)',
           padding: '40px 28px',
           animation: 'slideUp 0.6s cubic-bezier(.25,.46,.45,.94) both',
-          textAlign: 'center'
+          textAlign: 'center',
+          marginTop: '0px',
+          marginBottom: '0px'
         }}>
           <h2 style={{
-            fontSize: '2.5em',
+            fontSize: '2  em',
             fontWeight: 600,
             marginBottom: '20px',
             color: '#ffffff'
@@ -215,7 +217,7 @@ function ThankYouPage() {
             src="cc-logo.png" 
             alt="CC Logo" 
             style={{
-              height: '52px',
+              height: '50px',
               margin: '0 12px',
               verticalAlign: 'middle'
             }}
