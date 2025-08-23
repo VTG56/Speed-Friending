@@ -24,6 +24,7 @@ export default function Game() {
   const [friendKey, setFriendKey] = useState('');
   const [playerKey, setPlayerKey] = useState('');
   const [playerFullName, setPlayerFullName] = useState('');
+  const [selectedClass, setSelectedClass] = useState('');
   const [loading, setLoading] = useState(false);
   const [matchedFriend, setMatchedFriend] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
@@ -55,12 +56,16 @@ export default function Game() {
   const fetchPlayerData = useCallback(() => {
     const keyFromStorage = localStorage.getItem('playerKey');
     const nameFromStorage = localStorage.getItem('playerFullName');
+    const classFromStorage = localStorage.getItem('selectedClass');
     
     if (keyFromStorage) {
       setPlayerKey(keyFromStorage);
     }
     if (nameFromStorage) {
       setPlayerFullName(nameFromStorage);
+    }
+    if (classFromStorage) {
+      setSelectedClass(classFromStorage);
     }
   }, []);
 
@@ -72,6 +77,8 @@ export default function Game() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
+      // Clear localStorage
+      localStorage.clear();
       navigate('/'); // Redirect to homepage after sign out
     } catch (error) {
       console.error("Failed to sign out:", error);
@@ -186,10 +193,12 @@ export default function Game() {
   return (
     <div className="game-app-container">
       <div className="global-particles">
-        <div className="glow-particle tiny" style={{left: '15%', animationDuration: '13s', animationDelay: '0.5s'}}></div>
-        <div className="glow-particle small" style={{left: '45%', animationDuration: '17s', animationDelay: '1.2s'}}></div>
-        <div className="glow-particle medium" style={{left: '75%', animationDuration: '25s', animationDelay: '2.8s'}}></div>
-        <div className="glow-particle large" style={{left: '25%', animationDuration: '20s', animationDelay: '4.1s'}}></div>
+        <div className="glow-particle tiny" style={{left: '15%', animationDuration: '18s', animationDelay: '0.5s'}}></div>
+        <div className="glow-particle small" style={{left: '45%', animationDuration: '22s', animationDelay: '1.2s'}}></div>
+        <div className="glow-particle medium" style={{left: '75%', animationDuration: '20s', animationDelay: '2.8s'}}></div>
+        <div className="glow-particle large" style={{left: '25%', animationDuration: '25s', animationDelay: '4.1s'}}></div>
+        <div className="glow-particle tiny" style={{left: '85%', animationDuration: '16s', animationDelay: '6s'}}></div>
+        <div className="glow-particle small" style={{left: '5%', animationDuration: '19s', animationDelay: '3s'}}></div>
       </div>
 
       <Notification
@@ -198,10 +207,17 @@ export default function Game() {
         onDone={() => setNotification({ message: '', type: '' })}
       />
 
+      {/* Class Name Header - Top Center */}
+      <div className="class-name-header">
+        <h1 className="class-name-title">
+          {selectedClass || "Loading Class..."}
+        </h1>
+      </div>
+
+      {/* Navigation Buttons - Side by Side */}
       <div className="game-header">
         <button className="nav-btn" onClick={() => navigate('/leaderboard')}>🏆 Leaderboard</button>
         <button className="nav-btn" onClick={() => navigate('/starred-friends')}>⭐ Starred Friends</button>
-        
       </div>
 
       <main className="game-content">
@@ -211,49 +227,62 @@ export default function Game() {
           </div>
           
           <h2>Game Arena</h2>
-          <p className="instructions">Enter a friend's key to score points !</p>
+          <p className="instructions">Enter a friend's key to score points!</p>
 
           {!matchedFriend ? (
             <div className="input-section">
               <input
                 type="text"
-                placeholder="Enter friend's key here"
+                placeholder="Enter friend's key here..."
                 value={friendKey}
                 onChange={(e) => setFriendKey(e.target.value)}
                 disabled={loading}
               />
               <button onClick={handleMatch} disabled={loading} className="match-btn">
-                {loading ? 'Checking...' : 'Verify'}
+                {loading ? 'Verifying...' : 'Verify'}
               </button>
             </div>
           ) : (
             <div className="friend-card animate-pop-in">
-              <h3>Match Found!</h3>
+              <h3>🎉 Match Found!</h3>
               <p><strong>Name:</strong> {matchedFriend.firstName + " " + matchedFriend.lastName}</p>
               <p><strong>Hobby:</strong> {matchedFriend.hobby}</p>
               <p><strong>Club:</strong> {matchedFriend.clubPreference}</p>
               <p><strong>State:</strong> {matchedFriend.stateFull}</p>
               <p className="star-question">Do you want to star this friend?</p>
               <div className="decision-buttons">
-                <button className="star-yes-btn" onClick={() => handleStarDecision(true)} disabled={loading}>⭐ Yes, Star!</button>
-                <button className="star-no-btn" onClick={() => handleStarDecision(false)} disabled={loading}>No, thanks</button>
+                <button className="star-yes-btn" onClick={() => handleStarDecision(true)} disabled={loading}>
+                  ⭐ Yes, Star!
+                </button>
+                <button className="star-no-btn" onClick={() => handleStarDecision(false)} disabled={loading}>
+                  No, thanks
+                </button>
               </div>
             </div>
           )}
         </div>
       </main>
 
-      <footer className="player-key-display">
-          <h2>Your Unique Key</h2>
-          <p>Share this with your friends!</p>
-          <div className="key-box">
-            {playerKey || "Loading your key..."}
-          </div>
-      </footer>
-      <div className = "signout-button-container">
-    <button className="signout-btn" onClick={handleSignOut}>Sign Out</button>  
+      {/* Enhanced Player Key Display with Shiny Effect */}
+      <div className="player-key-display">
+        <h2>✨ Your Unique Key</h2>
+        <p>Share this with your friends!</p>
+        <div className="key-box">
+          {playerKey || "Loading your key..."}
+        </div>
+      </div>
+
+      {/* Sign Out Button - Center Red */}
+      <div className="signout-section">
+        <button className="signout-btn" onClick={handleSignOut}>
+          Sign Out
+        </button>  
+      </div>
+
+      {/* Footer Copyright */}
+      <div className="footer-copyright">
+        © RVCE SIP 2025
+      </div>
     </div>
-    </div>
-    
   );
 }
