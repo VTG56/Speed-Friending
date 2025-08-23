@@ -95,14 +95,15 @@ function Registration() {
 ];
 
   const clubOptions = [
-    "Antariksh","Vyoma","Astra","H-CARV","Ashwa",
-    "ECell","Chimera","NSS",
-    "Coding-Club","QuizCorp","Evoke","ACM","HAM-CLUB ","F/6.3",
-    "E-CARV","K-CARV","Rotaract","GDG","Alaap",
-    "DebSoc","Women in Cloud Insider Circle","dhRuVa","Helios",
-    "Krushi","Frequency","Garuda","Jatayu","TEDxRVCE",
-    "SPARK"
-  ];
+  "acm","accelerate","alaap","antariksh","ashwa",
+  "astra","avventura","chimera","coding-club","debsoc",
+  "dhruva","ecarv","ecell","evoke","f/6.3",
+  "frequency","garuda","gdg","ham-club","helios",
+  "jatayu","kcarv","krushi","nss","quizcorp",
+  "raag","rotaract","spark","tedxrvce","vyoma",
+  "women-in-cloud-insider-circle"
+];
+
 
   // Sanitization helper
   const sanitizeForKey = (str) => {
