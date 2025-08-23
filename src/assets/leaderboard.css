@@ -1,10 +1,11 @@
 .leaderboard-body {
-    min-height: 100vh;
+    height: 100vh;
     width: 100%;
     position: relative;
     background: linear-gradient(-45deg, #cb72d2, #554dab, #262e67, #764ba2);
     background-size: 400% 400%;
     animation: gradientBG 20s ease infinite;
+    overflow: hidden;
 }
 
 :root {
@@ -19,7 +20,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-x: hidden; }
+body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow: hidden; }
 @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
 /* Particle animations */
@@ -57,17 +58,19 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
 .leaderboard-container { 
     position: relative; 
     z-index: 1; 
-    max-width: 1400px; 
+    max-width: 1000px; 
     margin: 0 auto; 
     padding: 20px; 
-    min-height: 100vh; 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .header { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    margin-bottom: 30px; 
+    margin-bottom: 20px; 
     background: var(--card-gradient); 
     background-size: 400% 400%; 
     animation: gradientBG 20s ease infinite; 
@@ -77,9 +80,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
     border: 1px solid var(--border-color); 
     box-shadow: 0 8px 32px 0 var(--shadow-color); 
     padding: 20px 30px; 
-    position: sticky; 
-    top: 20px; 
-    z-index: 10; 
+    flex-shrink: 0;
 }
 
 .back-btn { 
@@ -117,15 +118,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
     margin-top: 5px;
 }
 
-/* Grid layout for main content */
-.content-grid { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr; 
-    gap: 30px; 
-    align-items: start;
-}
-
-.leaderboard-section, .chart-section { 
+.leaderboard-section { 
     background: var(--card-gradient); 
     background-size: 400% 400%; 
     animation: gradientBG 20s ease infinite; 
@@ -134,20 +127,29 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
     border-radius: 20px; 
     border: 1px solid var(--border-color); 
     box-shadow: 0 8px 32px 0 var(--shadow-color); 
-    padding: 30px; 
+    padding: 30px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
-.leaderboard-section h2, .chart-section h2 { 
+.leaderboard-section h2 { 
     font-size: 1.8em; 
     margin-bottom: 25px; 
     text-align: center; 
     color: var(--accent-color); 
     text-shadow: 0 2px 5px rgba(0,0,0,0.4); 
+    flex-shrink: 0;
 }
 
 /* Leaderboard Table Styles */
 .leaderboard-table {
     width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 .table-header {
@@ -163,6 +165,31 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
     color: var(--accent-color);
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    flex-shrink: 0;
+}
+
+.leaderboard-list {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.leaderboard-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.leaderboard-list::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.leaderboard-list::-webkit-scrollbar-thumb {
+    background: linear-gradient(45deg, var(--accent-color), #ff9500);
+    border-radius: 10px;
+}
+
+.leaderboard-list::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(45deg, var(--accent-hover), #e6870a);
 }
 
 .leaderboard-item {
@@ -218,34 +245,6 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
     text-overflow: ellipsis;
 }
 
-/* Chart section styles */
-.chart-section {
-    min-height: 500px;
-}
-
-.chart-loading, .chart-empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 400px;
-    color: var(--text-secondary);
-}
-
-.chart-tooltip {
-    background: rgba(0, 0, 0, 0.9) !important;
-    border: 1px solid var(--border-color) !important;
-    border-radius: 10px !important;
-    padding: 10px !important;
-    color: var(--text-primary) !important;
-}
-
-.tooltip-label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    color: var(--accent-color) !important;
-}
-
 /* Loading and error states */
 .loading-container, .empty-container, .error-container {
     display: flex;
@@ -254,6 +253,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
     justify-content: center;
     padding: 60px 20px;
     text-align: center;
+    flex: 1;
 }
 
 .loading-spinner, .empty-message, .error-message { 
@@ -293,23 +293,11 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
-    .content-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    
-    .leaderboard-container {
-        max-width: 900px;
-    }
-}
-
 @media (max-width: 1024px) {
     .header { 
         flex-direction: column; 
         gap: 15px; 
         text-align: center; 
-        position: static; 
     }
     
     .header h1 { 
@@ -346,7 +334,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
         padding: 20px; 
     }
     
-    .leaderboard-section, .chart-section { 
+    .leaderboard-section { 
         padding: 20px; 
     }
     
@@ -373,7 +361,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow-
         padding: 15px;
     }
     
-    .leaderboard-section, .chart-section {
+    .leaderboard-section {
         padding: 15px;
     }
     

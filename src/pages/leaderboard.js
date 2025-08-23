@@ -1,10 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { onSnapshot, getDocs, getDoc, query, where } from 'firebase/firestore';
-import { auth, db } from '../firebase-config';
+import { onSnapshot, getDoc } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { studentsColRef, userDocRef,pointsHistoryColRef } from './firestoreRefs';
 import '../assets/leaderboard.css';
 
@@ -24,7 +21,6 @@ export default function Leaderboard() {
   const [selectedClass, setSelectedClass] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [chartData, setChartData] = useState([]);
   const [pointsHistory, setPointsHistory] = useState({});
   const historyListenersRef = useRef({});
 
@@ -147,7 +143,6 @@ historyListenersRef.current = {};
         const studentDocs = studentsSnapshot.docs;
         if (studentDocs.length === 0) {
             setLeaderboardData([]);
-            setChartData([]);
             setPointsHistory({});
             setLoading(false);
             return;
@@ -220,8 +215,7 @@ historyListenersRef.current = {};
   // Update chart data when points history changes
   useEffect(() => {
     if (leaderboardData.length > 0 && Object.keys(pointsHistory).length > 0) {
-      const newChartData = generateChartData(leaderboardData, pointsHistory);
-      setChartData(newChartData);
+
     }
   }, [leaderboardData, pointsHistory, generateChartData]);
 
@@ -233,30 +227,6 @@ historyListenersRef.current = {};
   }, [cleanupHistoryListeners]);
   
   // Generate colors for chart lines
-  const getLineColor = (index) => {
-    const colors = [
-      '#8884d8', '#82ca9d', '#ffc658', '#ff7c7c', '#8dd1e1',
-      '#d084d0', '#ffb347', '#87d068', '#ff9999', '#87ceeb'
-    ];
-    return colors[index % colors.length];
-  };
-
-  // Custom tooltip for better formatting
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="chart-tooltip">
-          <p className="tooltip-label">{`Time: ${label}`}</p>
-          {payload.map((entry, index) => (
-            <p key={index} style={{ color: entry.color }}>
-              {`${entry.dataKey}: ${entry.value} pts`}
-            </p>
-          ))}
-        </div>
-      );
-    }
-    return null;
-  };
 
   // Render Logic
   const renderLeaderboardList = () => {
@@ -288,12 +258,7 @@ historyListenersRef.current = {};
     return (
       <div className="leaderboard-table">
         <div className="table-header">
-          <div className="rank-col">Rank</div>
-          <div className="name-col">Name</div>
-          <div className="points-col">Points</div>
-          <div className="club-col">Club</div>
-          <div className="state-col">State</div>
-          <div className="hobby-col">Hobby</div>
+          
         </div>
         {leaderboardData.map((user, idx) => {
           let rankClass = 'rank-normal';
@@ -318,64 +283,7 @@ historyListenersRef.current = {};
     );
   };
 
-  const renderChart = () => {
-    if (loading) {
-      return (
-        <div className="chart-loading">
-          <div className="loading-spinner"></div>
-          <p>Loading chart data...</p>
-        </div>
-      );
-    }
-
-    if (chartData.length === 0) {
-      return (
-        <div className="chart-empty">
-          <p>No chart data available yet. Points will appear as players earn them! 📈</p>
-        </div>
-      );
-    }
-
-    return (
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={chartData} margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-          <XAxis 
-            dataKey="timestamp" 
-            tick={{ fontSize: 12, fill: '#666' }}
-            interval="preserveStartEnd"
-            stroke="#666"
-          />
-          <YAxis 
-            tick={{ fontSize: 12, fill: '#666' }}
-            stroke="#666"
-          />
-          <Tooltip 
-            content={<CustomTooltip />}
-            contentStyle={{
-              backgroundColor: 'rgba(0, 0, 0, 0.8)',
-              border: '1px solid #333',
-              borderRadius: '8px',
-              color: '#fff'
-            }}
-          />
-          <Legend />
-          {leaderboardData.map((user, index) => (
-            <Line
-              key={user.uid}
-              type="monotone"
-              dataKey={user.name}
-              stroke={getLineColor(index)}
-              strokeWidth={2}
-              dot={{ r: 4, strokeWidth: 2 }}
-              activeDot={{ r: 6, strokeWidth: 2 }}
-              connectNulls={false}
-            />
-          ))}
-        </LineChart>
-      </ResponsiveContainer>
-    );
-  };
+  
 
   // Don't render anything if not authenticated
   if (!currentUser) {
@@ -408,11 +316,6 @@ historyListenersRef.current = {};
           <div className="leaderboard-section">
             <h2>🎯 Top Scorers</h2>
             {renderLeaderboardList()}
-          </div>
-          
-          <div className="chart-section">
-            <h2>📈Leaderboard</h2>
-            {renderChart()}
           </div>
         </div>
       </div>

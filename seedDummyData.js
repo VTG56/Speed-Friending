@@ -59,19 +59,47 @@ function nowDocId(suffix = "") {
 
 
 const CLUBS = [
-  "Team Antariksh","Team Vyoma","Team Astra Robotics","CARV Hindi","Ashwa Racing",
-  "Entrepreneurship Cell RVCE","Chimera Racing Electric","NSS National Service Scheme",
-  "Coding Club RVCE","RV QuizCorp","Evoke","ACM RVCE","HAM CLUB RVCE","F/6.3 Photography Club",
-  "CARV English","Rotaract Club of R.V.C.E","GDG RVCE","Alaap","Debating Society, RVCE",
-  "Women in Cloud Insider Circle","dhRuVa","Team Helios Racing","TEAM KRUSHI","Team Frequency",
-  "Project Garuda","Project Jatayu","TEDxRVCE","SPARK-IUCEE Student Chapter"
+  "acm","accelerate","alaap","antariksh","ashwa",
+  "astra","avventura","chimera","coding-club","debsoc",
+  "dhruva","ecarv","ecell","evoke","f/6.3",
+  "frequency","garuda","gdg","ham-club","helios",
+  "jatayu","kcarv","krushi","nss","quizcorp",
+  "raag","rotaract","spark","tedxrvce","vyoma",
+  "women-in-cloud-insider-circle"
 ];
 
 const STATES = [
-  "NRI","Andhra Pradesh","Arunachal Pradesh","Assam","Bihar","Chhattisgarh","Goa","Gujarat","Haryana",
-  "Himachal Pradesh","Jharkhand","Karnataka","Jammu and Kashmir","Kerala","Madhya Pradesh","Maharashtra",
-  "Manipur","Meghalaya","Mizoram","Nagaland","New Delhi","Odisha","Punjab","Rajasthan","Sikkim",
-  "Tamil Nadu","Telangana","Tripura","Uttar Pradesh","Uttarakhand","West Bengal"
+  { name: "NRI", code: "NRI" },
+  { name: "Andhra Pradesh", code: "AP" },
+  { name: "Arunachal Pradesh", code: "AR" },
+  { name: "Assam", code: "AS" },
+  { name: "Bihar", code: "BR" },
+  { name: "Chhattisgarh", code: "CG" },
+  { name: "Goa", code: "GA" },
+  { name: "Gujarat", code: "GJ" },
+  { name: "Haryana", code: "HR" },
+  { name: "Himachal Pradesh", code: "HP" },
+  { name: "Jharkhand", code: "JH" },
+  { name: "Karnataka", code: "KA" },
+  { name: "Jammu and Kashmir", code: "JK" },
+  { name: "Kerala", code: "KL" },
+  { name: "Madhya Pradesh", code: "MP" },
+  { name: "Maharashtra", code: "MH" },
+  { name: "Manipur", code: "MN" },
+  { name: "Meghalaya", code: "ML" },
+  { name: "Mizoram", code: "MZ" },
+  { name: "Nagaland", code: "NL" },
+  { name: "New Delhi", code: "DL" },
+  { name: "Odisha", code: "OD" },
+  { name: "Punjab", code: "PB" },
+  { name: "Rajasthan", code: "RJ" },
+  { name: "Sikkim", code: "SK" },
+  { name: "Tamil Nadu", code: "TN" },
+  { name: "Telangana", code: "TS" },
+  { name: "Tripura", code: "TR" },
+  { name: "Uttar Pradesh", code: "UP" },
+  { name: "Uttarakhand", code: "UK" },
+  { name: "West Bengal", code: "WB" }
 ];
 
 const HOBBIES = [
