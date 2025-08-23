@@ -7,20 +7,21 @@ import Particles from '../components/Particles';
 import rvceLogo from '../assets/rvce-logo.png';
 import ccLogo from '../assets/cc-logo.png';
 
-
 const SignupPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState('');
   const navigate = useNavigate();
-  
 
   const handleSignup = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
       return setError('Passwords do not match');
+    }
+    if (password.length < 6) {
+      return setError('Password must be at least 6 characters');
     }
     setLoading(true);
     setError('');
@@ -38,30 +39,52 @@ const SignupPage = () => {
       <Particles />
       <main className="content-container">
         <div className="signup-card">
-          <h1>Create Your Account</h1>
-          <p className="tagline">Join the fastest way to make new friends!</p>
-          {error && <div id="error-message" className="error-message show">{error}</div>}
-          <form id="signup-form" onSubmit={handleSignup}>
-            <div className="input-group">
-              <input type="email" id="email" name="email" required placeholder=" " value={email} onChange={(e) => setEmail(e.target.value)} />
-              <label htmlFor="email">Email Address</label>
+          <h1 className="signup-title">Create Your Account</h1>
+          <form id="signup-form" className="signup-form" onSubmit={handleSignup}>
+            <div className="form-group">
+              <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-            <div className="input-group">
-              <input type="password" id="password" name="password" required placeholder=" " minLength="6" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <label htmlFor="password">Password</label>
+            <div className="form-group">
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <div className="input-group">
-              <input type="password" id="confirm-password" name="confirm-password" required placeholder=" " minLength="6" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
-              <label htmlFor="confirm-password">Confirm Password</label>
+            <div className="form-group">
+              <input
+                type="password"
+                id="confirm-password"
+                placeholder="Confirm Password"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </div>
-            <button type="submit" className={`signup-btn ${loading ? 'loading' : ''}`} disabled={loading}>
-              <span>SIGN UP</span>
+            {error && <div className="error-message show">{error}</div>}
+            <button
+              type="submit"
+              className={`signup-btn ${loading ? 'loading' : ''}`}
+              id="signup-btn"
+              disabled={loading}
+            >
+              <span className="btn-text">Sign Up</span>
               <div className="loading-spinner" id="loading-spinner"></div>
             </button>
           </form>
-          <div className="login-link">
+          <p className="login-link">
             Already have an account? <Link to="/login">Login here</Link>
-          </div>
+          </p>
         </div>
       </main>
       <footer className="app-footer">

@@ -39,45 +39,52 @@ const LoginPage = () => {
   return (
     <div className="app-container">
       <Particles />
-      <div className="login-card">
-        <h1 className="login-title">Login to SpeedFriending</h1>
-        <form id="login-form" className="login-form" onSubmit={handleLogin}>
-          <div className="form-group">
-            <input
-              type="email"
-              id="email"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="password"
-              id="password"
-              placeholder="Password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          {error && <div className="error-message show">{error}</div>}
-          <button type="submit" className={`login-btn ${loading ? 'loading' : ''}`} id="login-btn" disabled={loading}>
-            <span className="btn-text">Login</span>
-            <div className="loading-spinner" id="loading-spinner"></div>
-          </button>
-        </form>
-        <p className="signup-link">
-          Don't have an account? <Link to="/signup">Sign up here</Link>
-        </p>
-      </div>
-      <footer className="footer">
+      <main className="content-container">
+        <div className="login-card">
+          <h1 className="login-title">Login to SpeedFriending</h1>
+          <form id="login-form" className="login-form" onSubmit={handleLogin}>
+            <div className="form-group">
+              <input
+                type="email"
+                id="email"
+                placeholder="Email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <input
+                type="password"
+                id="password"
+                placeholder="Password"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            {error && <div className="error-message show">{error}</div>}
+            <button
+              type="submit"
+              className={`login-btn ${loading ? 'loading' : ''}`}
+              id="login-btn"
+              disabled={loading}
+            >
+              <span className="btn-text">Login</span>
+              <div className="loading-spinner" id="loading-spinner"></div>
+            </button>
+          </form>
+          <p className="signup-link">
+            Don't have an account? <Link to="/signup">Sign up here</Link>
+          </p>
+        </div>
+      </main>
+      <footer className="app-footer">
         <div className="logo-container">
           <img src={rvceLogo} alt="RVCE Logo" className="logo" />
           <img src={ccLogo} alt="CC Logo" className="logo" />
         </div>
-         © RVCE SIP 2025
+        © RVCE SIP 2025
       </footer>
     </div>
   );

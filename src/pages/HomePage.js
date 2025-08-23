@@ -19,11 +19,11 @@ const HomePage = () => {
           </div>
         </div>
       </main>
-      <header className="app-header">
-        <img src={rvceLogo} alt="RVCE Logo" className="logo" />
-        <img src={ccLogo} alt="CC Logo" className="logo" />
-      </header>
       <footer className="app-footer">
+        <div className="logo-container">
+          <img src={rvceLogo} alt="RVCE Logo" className="logo" />
+          <img src={ccLogo} alt="CC Logo" className="logo" />
+        </div>
         © RVCE SIP 2025
       </footer>
     </div>
