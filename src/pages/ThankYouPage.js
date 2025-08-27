@@ -152,8 +152,8 @@ function ThankYouPage() {
             marginBottom: '30px',
             lineHeight: 1.6
           }}>
-            Your profile has been created. Now go socialize and find your potential EL teammate ! 
-            Good luck !
+            Your profile has been created. Now go socialize and maybe find your potential EL teammate. 
+            Good luck da!
           </p>
 
           <button
