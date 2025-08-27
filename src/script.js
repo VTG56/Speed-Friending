@@ -4,12 +4,12 @@ import { db } from './firebase';
 import './App.css';
 import { studentsColRef } from './firestoreRefs';
 const firebaseConfig = {
-  apiKey: "AIzaSyCObU_cHXxjqUU2pvDB3LCTSGUZd8Q1jWE",
-  authDomain: "student-registration-app-67741.firebaseapp.com",
-  projectId: "student-registration-app-67741",
-  storageBucket: "student-registration-app-67741.firebasestorage.app",
-  messagingSenderId: "8156474773",
-  appId: "1:8156474773:web:edc1739c10cf2f24979a9c"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase

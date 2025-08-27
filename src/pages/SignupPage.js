@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase-config';
+import { doc, setDoc } from 'firebase/firestore';
+import { auth, db } from '../firebase-config';
+import { uidToStudentIdRef } from './firestoreRefs'; // Import the new ref
 import '../assets/signup.css';
 import Particles from '../components/Particles';
 import rvceLogo from '../assets/rvce-logo.png';
@@ -12,7 +14,7 @@ const SignupPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSignup = async (e) => {
@@ -26,10 +28,19 @@ const SignupPage = () => {
     setLoading(true);
     setError('');
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Create the UID to Student ID mapping document
+      await setDoc(doc(db, 'uid_to_student_id', user.uid), {
+        studentId: null, // This will be updated after registration
+        classId: null,   // This will be updated after registration
+      });
+
       navigate('/profile'); // Redirect to profile page after signup
     } catch (err) {
       setError('Failed to create an account. Please try again.');
+      console.error("Signup Error:", err);
     }
     setLoading(false);
   };

@@ -3,11 +3,13 @@ import { getDocs } from 'firebase/firestore';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import '../assets/StarredFriends.css';
 import { starredFriendsColRef } from "./firestoreRefs";
+import { useNavigate } from 'react-router-dom';
 
 export default function StarredFriends() {
   const [starredFriends, setStarredFriends] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
   const auth = getAuth();
 
   useEffect(() => {
@@ -18,7 +20,11 @@ export default function StarredFriends() {
           const uid = currentUser.uid;
           const starredRef = starredFriendsColRef(uid);
           const snapshot = await getDocs(starredRef);
-          const friendsList = snapshot.docs.map(doc => doc.data());
+          // FIX: Use the document ID as the key for the list
+          const friendsList = snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
           setStarredFriends(friendsList);
         } catch (error) {
           console.error('Error fetching starred friends:', error);
@@ -115,7 +121,7 @@ export default function StarredFriends() {
       <div className="starred-card">
         <button
           className="back-btn"
-          onClick={() => window.location.href = "/game"}
+          onClick={() => navigate(-1)} // CHANGE IS HERE
         >
           ← Back to Game
         </button>
@@ -135,14 +141,14 @@ export default function StarredFriends() {
           </div>
         ) : (
           <div className="friends-grid">
-            {starredFriends.map((friend, index) => {
+            {starredFriends.map((friend) => {
               const fullName = `${friend.firstName || ''} ${friend.lastName || ''}`.trim() || friend.friendName || 'Unknown Friend';
               const state = friend.stateFull || friend.state || friend.native || 'N/A';
               const club = friend.club || 'N/A';
               const hobby = friend.hobby || 'N/A';
 
               return (
-                <div key={index} className="friend-card">
+                <div key={friend.id} className="friend-card">
                   <div className="friend-name">{fullName}</div>
                   <div className="friend-details">
                     <div className="detail-item">

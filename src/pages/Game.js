@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { doc, getDoc, setDoc, addDoc, serverTimestamp } from 'firebase/firestore';
 import { signOut } from 'firebase/auth';
+import { useAuthGuard } from './AuthGuard';
 import { auth, db } from '../firebase-config';
-// Add this import at the top
-import { userDocRef, keyDocRef, starredFriendsColRef, pointsHistoryColRef } from './firestoreRefs';
+import { studentDocRef, keyDocRef, starredFriendsColRef, pointsHistoryColRef, uidToStudentIdRef, userDocRef } from './firestoreRefs';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-
-// Import Particles and the slim engine
 import { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-
-// Import Components and CSS
 import Notification from '../components/Notification';
 import '../assets/Notification.css';
 import '../assets/Game.css';
@@ -20,17 +16,16 @@ export default function Game() {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  // State Management
   const [friendKey, setFriendKey] = useState('');
   const [playerKey, setPlayerKey] = useState('');
   const [playerFullName, setPlayerFullName] = useState('');
   const [selectedClass, setSelectedClass] = useState('');
+  const [studentId, setStudentId] = useState(''); // Add studentId state
   const [loading, setLoading] = useState(false);
   const [matchedFriend, setMatchedFriend] = useState(null);
   const [notification, setNotification] = useState({ message: '', type: '' });
   const [initParticles, setInitParticles] = useState(false);
 
-  // Initialize Particles Engine
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine);
@@ -39,79 +34,84 @@ export default function Game() {
     });
   }, []);
 
-  // Auth Guard - Redirect if not logged in
-  useEffect(() => {
-    if (!auth.currentUser) {
-      navigate('/login');
-      return;
-    }
-  }, [navigate]);
-
-  // Function to show notifications
   const showNotification = (message, type) => {
     setNotification({ message, type });
   };
 
-  // Fetch the current player's data from localStorage
   const fetchPlayerData = useCallback(async () => {
-  const keyFromStorage = localStorage.getItem('playerKey');
-  const nameFromStorage = localStorage.getItem('playerFullName');
-  const classFromStorage = localStorage.getItem('selectedClass');
+    const keyFromStorage = localStorage.getItem('playerKey');
+    const nameFromStorage = localStorage.getItem('playerFullName');
+    const classFromStorage = localStorage.getItem('selectedClass');
 
-  // If data is already in localStorage, use it.
-  if (keyFromStorage && nameFromStorage && classFromStorage) {
-    setPlayerKey(keyFromStorage);
-    setPlayerFullName(nameFromStorage);
-    setSelectedClass(classFromStorage);
-    return; // Exit the function
-  }
-  
-  // Otherwise, if a user is logged in, fetch from Firestore.
-  if (auth.currentUser) {
-    console.log("localStorage is empty. Fetching player data from Firestore...");
-    try {
-      const userRef = userDocRef(auth.currentUser.uid);
-      const userSnap = await getDoc(userRef);
-
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        const fullName = `${userData.firstName || ''} ${userData.lastName || ''}`.trim();
-
-        // Update state with the fetched data
-        setPlayerKey(userData.playerKey || '');
-        setPlayerFullName(fullName);
-        setSelectedClass(userData.selectedClass || '');
-
-        // IMPORTANT: Save the fetched data back to localStorage for the next session
-        localStorage.setItem('playerKey', userData.playerKey || '');
-        localStorage.setItem('playerFullName', fullName);
-        localStorage.setItem('selectedClass', userData.selectedClass || '');
-      } else {
-        // This handles cases where a user might exist but hasn't registered
-        console.warn("User document not found. Redirecting to registration.");
-        navigate('/profile'); // or '/registration'
-      }
-    } catch (error) {
-      console.error("Failed to fetch player data:", error);
-      showNotification("Could not load your profile.", "error");
+    if (keyFromStorage && nameFromStorage && classFromStorage) {
+      setPlayerKey(keyFromStorage);
+      setPlayerFullName(nameFromStorage);
+      setSelectedClass(classFromStorage);
+      return;
     }
-  }
-}, [navigate]); // remove 'currentUser' from here as we use auth.currentUser directly
 
-// Replace the useEffect that calls fetchPlayerData
-useEffect(() => {
-  if (auth.currentUser) {
-    fetchPlayerData();
-  }
-}, [fetchPlayerData]); // Run only when the function is created
+    if (auth.currentUser) {
+      console.log("localStorage is empty. Fetching player data from Firestore...");
+      try {
+        // 1. Get the studentId from the mapping collection
+        const mappingRef = uidToStudentIdRef(auth.currentUser.uid);
+        const mappingSnap = await getDoc(mappingRef);
 
+        if (mappingSnap.exists()) {
+          const mappingData = mappingSnap.data();
+          const { studentId: fetchedStudentId, classId } = mappingData;
 
-  // --- SIGN OUT FUNCTION ---
+          if (fetchedStudentId && classId) {
+            // 2. Use the retrieved studentId and classId to fetch student data
+            const userRef = studentDocRef(classId, fetchedStudentId);
+            const userSnap = await getDoc(userRef);
+
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+              setPlayerKey(userData.key);
+              setPlayerFullName(`${userData.firstName} ${userData.lastName}`);
+              setSelectedClass(classId);
+              setStudentId(fetchedStudentId); // Store studentId
+
+              // Save to localStorage
+              localStorage.setItem('playerKey', userData.key);
+              localStorage.setItem('playerFullName', `${userData.firstName} ${userData.lastName}`);
+              localStorage.setItem('selectedClass', classId);
+              localStorage.setItem('studentId', fetchedStudentId);
+            } else {
+              console.warn("Student document not found. Redirecting to registration.");
+              navigate('/profile');
+            }
+          } else {
+            console.warn("Student ID or Class ID not found in mapping. Redirecting.");
+            navigate('/profile');
+          }
+        } else {
+          console.warn("UID to Student ID mapping not found. Redirecting.");
+          navigate('/profile');
+        }
+      } catch (error) {
+        console.error("Failed to fetch player data:", error);
+        showNotification("Could not load your profile.", "error");
+      }
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      fetchPlayerData();
+    }
+  }, [fetchPlayerData]);
+
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      
-      navigate('/'); // Redirect to homepage after sign out
+      // Clear all cached data from localStorage
+      localStorage.removeItem('playerKey');
+      localStorage.removeItem('playerFullName');
+      localStorage.removeItem('selectedClass');
+      localStorage.removeItem('studentId');
+      navigate('/');
     } catch (error) {
       console.error("Failed to sign out:", error);
       showNotification("Failed to sign out. Please try again.", "error");
@@ -134,9 +134,12 @@ useEffect(() => {
     }
 
     const userUid = currentUser.uid;
-    const selectedClass = localStorage.getItem('selectedClass');
-    const enteredKeyRef = doc(db, userDocRef(userUid).path, 'entered_keys', friendKey);
-    const keyValidityRef = keyDocRef(selectedClass, friendKey);
+    const currentClass = selectedClass || localStorage.getItem('selectedClass');
+    const currentStudentId = studentId || localStorage.getItem('studentId');
+    
+    // FIX: Use correct reference path for entered_keys
+    const enteredKeyRef = doc(db, `classes/${currentClass}/students/${currentStudentId}/entered_keys/${friendKey}`);
+    const keyValidityRef = keyDocRef(currentClass, friendKey);
 
     try {
       const duplicateCheck = await getDoc(enteredKeyRef);
@@ -170,21 +173,24 @@ useEffect(() => {
     setLoading(true);
 
     const userUid = currentUser.uid;
-    const userPointsRef = userDocRef(userUid);
-    const enteredKeyRef = doc(db, 'users', userUid, 'entered_keys', friendKey);
+    const currentClass = selectedClass || localStorage.getItem('selectedClass');
+    const currentStudentId = studentId || localStorage.getItem('studentId');
+    
+    // FIX: Use correct reference paths
+    const userPointsRef = studentDocRef(currentClass, currentStudentId);
+    const enteredKeyRef = doc(db, `classes/${currentClass}/students/${currentStudentId}/entered_keys/${friendKey}`);
+    const userRootRef = userDocRef(userUid);
     const pointsHistoryRef = pointsHistoryColRef(userUid);
 
     try {
       const userPointsDoc = await getDoc(userPointsRef);
       const currentPoints = userPointsDoc.data()?.points_total || 0;
       
-      // Update points total
+      // Update both locations - student document AND user document
       await setDoc(userPointsRef, { points_total: currentPoints + 10 }, { merge: true });
-      
-      // Log entry into entered_keys
-      await setDoc(enteredKeyRef, { timestamp: serverTimestamp() });
+      await setDoc(userRootRef, { points_total: currentPoints + 10 }, { merge: true });
 
-      // Add to points history for real-time graphing
+      // Add points history entry
       await addDoc(pointsHistoryRef, {
         points: 10,
         action: shouldStar ? 'starred_friend' : 'matched_friend',
@@ -192,18 +198,25 @@ useEffect(() => {
         timestamp: serverTimestamp()
       });
 
+      // FIX: Add the entered key to the user's entered_keys subcollection to prevent duplicates
+      await setDoc(enteredKeyRef, {
+        key: friendKey,
+        timestamp: serverTimestamp()
+      });
+
       const friendFullName = matchedFriend.firstName + " " + matchedFriend.lastName;
 
       if (shouldStar) {
         const starredFriendsRef = starredFriendsColRef(userUid);
-        await addDoc(starredFriendsRef, {
+        // FIX: Use setDoc with a specific document ID to prevent duplicates
+        await setDoc(doc(starredFriendsRef, friendKey), {
           friendName: friendFullName,
           key: friendKey,
           stateFull: matchedFriend.stateFull,
           club: matchedFriend.clubPreference,
           hobby: matchedFriend.hobby,
           timestamp: serverTimestamp()
-        });
+        }, { merge: true });
         showNotification(`⭐ ${matchedFriend.firstName} Starred! +10 points`, 'success');
       } else {
         showNotification('✅ Match Complete! +10 points', 'success');
@@ -300,7 +313,7 @@ useEffect(() => {
         <h2>✨ Your Unique Key</h2>
         <p>Share this with your friends!</p>
         <div className="key-box">
-          {playerKey || "Loading your key..."}
+          {playerKey || "Loading your key..."}{" "}
         </div>
       </div>
 
@@ -308,13 +321,11 @@ useEffect(() => {
       <div className="signout-section">
         <button className="signout-btn" onClick={handleSignOut}>
           Sign Out
-        </button>  
+        </button>{" "}
       </div>
 
       {/* Footer Copyright */}
-      <div className="footer-copyright">
-        © RVCE SIP 2025
-      </div>
+      <div className="footer-copyright">© RVCE SIP 2025</div>
     </div>
   );
 }

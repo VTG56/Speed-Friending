@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       setCurrentUser(user);
       setLoading(false); // Auth state has been checked
     });
-
+    
     // Cleanup the listener when the component unmounts
     return unsubscribe;
   }, []);

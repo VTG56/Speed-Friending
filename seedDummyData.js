@@ -65,7 +65,7 @@ const CLUBS = [
   "frequency","garuda","gdg","ham-club","helios",
   "jatayu","kcarv","krushi","nss","quizcorp",
   "raag","rotaract","spark","tedxrvce","vyoma",
-  "women-in-cloud-insider-circle"
+  "WiC"
 ];
 
 const STATES = [

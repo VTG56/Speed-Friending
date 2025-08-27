@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase-config';
 import '../assets/login.css';
 import Particles from '../components/Particles';
@@ -14,23 +14,20 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navigate('/game');
-      }
-    });
-    return unsubscribe;
-  }, [navigate]);
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      
+      // CRITICAL FIX: Clear ALL localStorage data to prevent cross-device conflicts
+      localStorage.clear();
+      
+      // Navigate to game - fetchPlayerData will handle loading fresh data
       navigate('/game');
     } catch (err) {
+      console.error('Login error:', err);
       setError('Failed to log in. Please check your credentials.');
     }
     setLoading(false);

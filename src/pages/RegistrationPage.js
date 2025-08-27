@@ -1,10 +1,13 @@
 // src/Registration.js
 import React, { useState, useMemo, useEffect } from "react";
-import { addDoc, setDoc } from "firebase/firestore";
+import { addDoc, setDoc} from "firebase/firestore";
 import { auth } from "../firebase";
+
 import "../assets/App.css";
-import { studentsColRef, keyDocRef } from "./firestoreRefs";
+import { studentsColRef, keyDocRef, uidToStudentIdRef } from "./firestoreRefs";
 import { useNavigate } from "react-router-dom";
+import { db } from "../firebase-config";
+import { doc } from "firebase/firestore";
 
 // Particles
 import Particles, { initParticlesEngine } from "@tsparticles/react";
@@ -158,48 +161,61 @@ function Registration() {
         .replace(/\+/g, ''); // Remove + characters
       
       const sanitizedClubPreference = sanitizeForKey(formData.clubPreference).toLowerCase();
-const sanitizedHobby = sanitizeForKey(formData.hobby).toLowerCase();
-const upperStateCode = formData.stateCode.toUpperCase();
+      const sanitizedHobby = sanitizeForKey(formData.hobby).toLowerCase();
+      const upperStateCode = formData.stateCode.toUpperCase();
 
       // Generate key string
       const keyString = `${sanitizedFirstName.toLowerCase()}+${upperStateCode}+${sanitizedClubPreference}+${sanitizedHobby}`;
 
-      // Save student in class -> students
-      await addDoc(studentsColRef(formData.selectedClass), {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        stateCode: formData.stateCode,
-        stateFull: formData.stateFull,
-        clubPreference: formData.clubPreference,
-        hobby: formData.hobby,
-        key: keyString,
-        uid: auth.currentUser.uid,
-        registrationDate: new Date().toISOString(),
-        registrationTime: new Date().toLocaleString(),
-        usedPasswords: []
-      });
+      // Save student in class -> students collection and get the document reference
+      // Generate a custom studentId instead of using auto-generated ID
+const customStudentId = `${formData.selectedClass}-${Date.now()}-${auth.currentUser.uid.slice(-6)}`;
 
-      // Save generated key in class -> keys/{keyString}
-      await setDoc(
-        keyDocRef(formData.selectedClass, keyString),
-        {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          stateCode: formData.stateCode,
-          stateFull: formData.stateFull,
-          clubPreference: formData.clubPreference,
-          hobby: formData.hobby,
-          uid: auth.currentUser.uid,
-          timestamp: Date.now(),
-        }
-      );
+// Use setDoc with custom ID instead of addDoc
+await setDoc(doc(db, `classes/${formData.selectedClass}/students/${customStudentId}`), {
+  firstName: formData.firstName,
+  lastName: formData.lastName,
+  stateCode: formData.stateCode,
+  stateFull: formData.stateFull,
+  clubPreference: formData.clubPreference,
+  hobby: formData.hobby,
+  key: keyString,
+  uid: auth.currentUser.uid,
+  registrationDate: new Date().toISOString(),
+  registrationTime: new Date().toLocaleString(),
+  points_total: 0,
+  usedPasswords: []
+});
+
+// Create UID to Student ID mapping
+await setDoc(uidToStudentIdRef(auth.currentUser.uid), {
+  studentId: customStudentId,
+  classId: formData.selectedClass,
+  createdAt: new Date().toISOString(),
+  uid: auth.currentUser.uid
+});
+
+// Update key document to include studentId
+await setDoc(keyDocRef(formData.selectedClass, keyString), {
+  firstName: formData.firstName,
+  lastName: formData.lastName,
+  stateCode: formData.stateCode,
+  stateFull: formData.stateFull,
+  clubPreference: formData.clubPreference,
+  hobby: formData.hobby,
+  uid: auth.currentUser.uid,
+  studentId: customStudentId,
+  timestamp: Date.now(),
+});
+
+localStorage.setItem("studentId", customStudentId);
 
       // Persist data in localStorage
       localStorage.setItem("selectedClass", formData.selectedClass);
       localStorage.setItem("playerKey", keyString);
       localStorage.setItem("playerFullName", `${formData.firstName} ${formData.lastName}`);
 
-      // Redirect using window.location.href as specified
+      // Redirect using navigate
       navigate('/thankyou');
     } catch (error) {
       console.error("Error saving student data:", error);

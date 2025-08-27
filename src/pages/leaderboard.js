@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { onSnapshot, getDoc } from 'firebase/firestore';
+import { onSnapshot, getDoc, collection, query, where } from 'firebase/firestore';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { studentsColRef, userDocRef,pointsHistoryColRef } from './firestoreRefs';
+import { studentsColRef, studentDocRef, pointsHistoryColRef } from './firestoreRefs';
 import '../assets/leaderboard.css';
 
 // Helper function to batch queries for the Firestore 'in' limitation
@@ -138,42 +138,16 @@ historyListenersRef.current = {};
 
     const studentsRef = studentsColRef(selectedClass);
 
+    // FIX: Simplified query to use the new data structure
     const unsubscribe = onSnapshot(studentsRef, async (studentsSnapshot) => {
       try {
-        const studentDocs = studentsSnapshot.docs;
-        if (studentDocs.length === 0) {
-            setLeaderboardData([]);
-            setPointsHistory({});
-            setLoading(false);
-            return;
-        }
-
-        const studentUids = studentDocs.map(doc => doc.data().uid);
-        const uidChunks = chunkArray(studentUids, 30); // Firestore 'in' query limit is 30
-        const usersData = {};
-
-        // Fetch user data in batches using individual getDoc calls
-        const promises = uidChunks.map(chunk => 
-          Promise.all(chunk.map(uid => getDoc(userDocRef(uid))))
-        );
-        
-        const userSnapshots = await Promise.all(promises);
-        userSnapshots.forEach(chunkResults => {
-          chunkResults.forEach(doc => {
-            if (doc.exists()) {
-              usersData[doc.id] = doc.data();
-            }
-          });
-        });
-
-        // Combine student and user data
-        const combinedData = studentDocs.map(doc => {
+        const combinedData = studentsSnapshot.docs.map(doc => {
             const student = doc.data();
-            const user = usersData[student.uid] || {};
             return {
+                // FIX: Retrieve uid and other data directly from the student document
                 uid: student.uid,
                 name: `${student.firstName || ''} ${student.lastName || ''}`.trim(),
-                points_total: user.points_total || 0,
+                points_total: student.points_total || 0,
                 club: student.clubPreference || 'N/A',
                 stateFull: student.stateFull || 'N/A',
                 hobby: student.hobby || 'N/A'
