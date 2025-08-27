@@ -15,7 +15,7 @@ import { loadSlim } from "@tsparticles/slim";
 
 // State list with codes
 const STATES = [
-  { name: "NRI", code: "NRI" },
+  // 28 Indian States
   { name: "Andhra Pradesh", code: "AP" },
   { name: "Arunachal Pradesh", code: "AR" },
   { name: "Assam", code: "AS" },
@@ -27,7 +27,6 @@ const STATES = [
   { name: "Himachal Pradesh", code: "HP" },
   { name: "Jharkhand", code: "JH" },
   { name: "Karnataka", code: "KA" },
-  { name: "Jammu and Kashmir", code: "JK" },
   { name: "Kerala", code: "KL" },
   { name: "Madhya Pradesh", code: "MP" },
   { name: "Maharashtra", code: "MH" },
@@ -35,7 +34,6 @@ const STATES = [
   { name: "Meghalaya", code: "ML" },
   { name: "Mizoram", code: "MZ" },
   { name: "Nagaland", code: "NL" },
-  { name: "New Delhi", code: "DL" },
   { name: "Odisha", code: "OD" },
   { name: "Punjab", code: "PB" },
   { name: "Rajasthan", code: "RJ" },
@@ -45,7 +43,16 @@ const STATES = [
   { name: "Tripura", code: "TR" },
   { name: "Uttar Pradesh", code: "UP" },
   { name: "Uttarakhand", code: "UK" },
-  { name: "West Bengal", code: "WB" }
+  { name: "West Bengal", code: "WB" },
+  // 8 Indian Union Territories
+  { name: "Andaman and Nicobar Islands", code: "AN" },
+  { name: "Chandigarh", code: "CH" },
+  { name: "Dadra and Nagar Haveli and Daman and Diu", code: "DN" },
+  { name: "Delhi", code: "DL" },
+  { name: "Jammu and Kashmir", code: "JK" },
+  { name: "Ladakh", code: "LA" },
+  { name: "Lakshadweep", code: "LD" },
+  { name: "Puducherry", code: "PY" },
 ];
 
 function Registration() {
@@ -99,12 +106,12 @@ function Registration() {
 
   const clubOptions = [
   "acm","accelerate","alaap","antariksh","ashwa",
-  "astra","avventura","chimera","coding-club","debsoc",
-  "dhruva","ecarv","ecell","evoke","f/6.3",
+  "astra","avventura","chimera","coding-club","cubex","debsoc",
+  "dhruva","ecarv","ecell","evoke","footprints","f/6.3",
   "frequency","garuda","gdg","ham-club","helios",
-  "jatayu","kcarv","krushi","nss","quizcorp",
+  "jatayu","kcarv","krushi","ncc","nss","quizcorp",
   "raag","rotaract","spark","tedxrvce","vyoma",
-  "women-in-cloud-insider-circle"
+  "wic"
 ];
 
 

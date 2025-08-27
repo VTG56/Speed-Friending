@@ -12,7 +12,7 @@ const HomePage = () => {
       <main className="content-container">
         <div className="homepage-card">
           <h1>SpeedFriending</h1>
-          <p className="tagline"><b>Connect. Compete. Make Friends Faster.</b></p>
+          <p className="tagline"><b>Connect. Socialize. Make Friends Faster.</b></p>
           <div className="button-container">
             <Link to="/login" className="auth-btn login-btn">LOGIN</Link>
             <Link to="/signup" className="auth-btn signup-btn">SIGN UP</Link>

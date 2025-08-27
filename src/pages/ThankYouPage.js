@@ -152,8 +152,8 @@ function ThankYouPage() {
             marginBottom: '30px',
             lineHeight: 1.6
           }}>
-            Your profile has been created and you're ready to start making new friends. 
-            The arena awaits your arrival!
+            Your profile has been created. Now go socialize and find your potential EL teammate ! 
+            Good luck !
           </p>
 
           <button
