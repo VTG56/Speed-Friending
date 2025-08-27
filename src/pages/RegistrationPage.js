@@ -97,11 +97,18 @@ function Registration() {
 
   // Options
   const classOptions = [
-  "AIML-CR001","AIML-CR002","BT-217","BT-218","CH-104","CH-105",
-  "CE-204","CE-205","CE-217","CE-312","CE-317","CE-319",
-  "EE-116","EE-117","EE-112","EE-203","EE-202","EE-215",
-  "EC-203","EC-204","EC-205","EC-211","EC-212","EC-214",
-  "IS-112B","IS-106A"
+  // Session 1
+  "S1 AIML-CR001", "S1 AIML-CR002", "S1 BT-217", "S1 BT-218", "S1 CH-104", "S1 CH-105",
+  "S1 CE-204", "S1 CE-205", "S1 CE-217", "S1 CE-312", "S1 CE-317", "S1 CE-319",
+  "S1 EE-116", "S1 EE-117", "S1 EE-112", "S1 EE-203", "S1 EE-202", "S1 EE-215",
+  "S1 EC-203", "S1 EC-204", "S1 EC-205", "S1 EC-211", "S1 EC-212", "S1 EC-214",
+  "S1 IS-112B", "S1 IS-106A", "S1 xyz",
+  // Session 2
+  "S2 AIML-CR001", "S2 AIML-CR002", "S2 BT-217", "S2 BT-218", "S2 CH-104", "S2 CH-105",
+  "S2 CE-204", "S2 CE-205", "S2 CE-217", "S2 CE-312", "S2 CE-317", "S2 CE-319",
+  "S2 EE-116", "S2 EE-117", "S2 EE-112", "S2 EE-203", "S2 EE-202", "S2 EE-215",
+  "S2 EC-203", "S2 EC-204", "S2 EC-205", "S2 EC-211", "S2 EC-212", "S2 EC-214",
+  "S2 IS-112B", "S2 IS-106A", "S2 xyz"
 ];
 
   const clubOptions = [
