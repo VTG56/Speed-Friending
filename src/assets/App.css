@@ -13,7 +13,7 @@
   animation: gradientBG 15s ease infinite;
   position: relative;
   z-index: 0;
-  overflow: hidden;
+  overflow: auto !important;
 }
 
 .main-header {

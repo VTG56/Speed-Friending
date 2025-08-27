@@ -2,7 +2,7 @@
    MOBILE FIRST APPROACH - BASE STYLES
    ========================================= */
 .body{
-  overflow: auto;
+  overflow: auto !important;
 }
    .game-app-container {
   min-height: 100vh;

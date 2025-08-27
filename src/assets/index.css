@@ -2,7 +2,7 @@ body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
   color: #ffffff;
-  overflow: hidden;
+  overflow: auto !important;
   background: #0b0920;
   height: 100vh;
   width: 100vw;

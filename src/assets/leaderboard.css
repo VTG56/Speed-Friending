@@ -5,7 +5,7 @@
     background: linear-gradient(-45deg, #cb72d2, #554dab, #262e67, #764ba2);
     background-size: 400% 400%;
     animation: gradientBG 20s ease infinite;
-    overflow: hidden;
+    overflow: auto !important;
 }
 
 :root {
@@ -17,6 +17,7 @@
     --text-secondary: #d9ccf9;
     --border-color: rgba(255, 255, 255, 0.2);
     --shadow-color: rgba(0, 0, 0, 0.37);
+    overflow: auto !important;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,6 +81,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
     border: 1px solid var(--border-color); 
     box-shadow: 0 8px 32px 0 var(--shadow-color); 
     padding: 20px 30px; 
+    position: fixed;
     flex-shrink: 0;
 }
 
@@ -131,7 +133,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: auto !important;
 }
 
 .leaderboard-section h2 { 
@@ -141,6 +143,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
     color: var(--accent-color); 
     text-shadow: 0 2px 5px rgba(0,0,0,0.4); 
     flex-shrink: 0;
+    overflow: auto !important;
 }
 
 /* Leaderboard Table Styles */
@@ -149,7 +152,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow: auto !important;
 }
 
 .table-header {
@@ -170,11 +173,12 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
 
 .leaderboard-list {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto !important;
     padding-right: 10px;
 }
 
 .leaderboard-list::-webkit-scrollbar {
+    overflow: auto !important;
     width: 8px;
 }
 
@@ -186,6 +190,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
 .leaderboard-list::-webkit-scrollbar-thumb {
     background: linear-gradient(45deg, var(--accent-color), #ff9500);
     border-radius: 10px;
+    overflow: auto !important;
 }
 
 .leaderboard-list::-webkit-scrollbar-thumb:hover {
@@ -203,6 +208,7 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
     margin-bottom: 10px;
+    overflow: auto !important;
 }
 
 .leaderboard-item:hover {
@@ -336,6 +342,8 @@ body { font-family: 'Poppins', sans-serif; color: var(--text-primary); overflow:
     
     .leaderboard-section { 
         padding: 20px; 
+        overflow: auto !important;
+        
     }
     
     .table-header, .leaderboard-item {
