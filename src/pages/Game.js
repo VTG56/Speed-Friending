@@ -300,7 +300,7 @@ export default function Game() {
                   ⭐ Yes, Star!
                 </button>
                 <button className="star-no-btn" onClick={() => handleStarDecision(false)} disabled={loading}>
-                  No, thanks
+                  No thanks
                 </button>
               </div>
             </div>
