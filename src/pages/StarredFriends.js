@@ -4,6 +4,10 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import '../assets/StarredFriends.css';
 import { starredFriendsColRef } from "./firestoreRefs";
 import { useNavigate } from 'react-router-dom';
+import { jsPDF } from "jspdf";
+import Notification from "../components/Notification";
+
+
 
 export default function StarredFriends() {
   const [starredFriends, setStarredFriends] = useState([]);
@@ -11,6 +15,9 @@ export default function StarredFriends() {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   const auth = getAuth();
+  const [notifMessage, setNotifMessage] = useState("");
+  const [notifType, setNotifType] = useState("success"); // can be success, error, etc
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -66,35 +73,68 @@ export default function StarredFriends() {
   };
 
   const handleDownload = () => {
-    if (starredFriends.length === 0) {
-      alert('No starred friends to download!');
-      return;
+  if (starredFriends.length === 0) {
+    setNotifMessage("No starred friends to download!");
+    setNotifType("error");
+    return;
+  }
+
+  const doc = new jsPDF();
+  let y = 20;
+
+  // Title
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(22);
+  doc.setTextColor(44, 62, 80); // dark blue-gray
+  doc.text("My Starred Friends List", 10, y);
+
+  y += 15;
+
+  starredFriends.forEach((friend, index) => {
+    const fullName =
+      `${friend.firstName || ""} ${friend.lastName || ""}`.trim() ||
+      friend.friendName ||
+      "Unknown";
+    const state = friend.stateFull || friend.state || friend.native || "N/A";
+    const club = friend.club || "N/A";
+    const hobby = friend.hobby || "N/A";
+
+    // Friend name (highlighted)
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(52, 152, 219); // sky blue
+    doc.text(`${index + 1}. ${fullName}`, 10, y);
+    y += 8;
+
+    // Details (smaller & gray)
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(100, 100, 100);
+    doc.text(`From: ${state}`, 15, y);
+    y += 6;
+    doc.text(`Club Interest: ${club}`, 15, y);
+    y += 6;
+    doc.text(`Hobby: ${hobby}`, 15, y);
+    y += 10;
+
+    if (y > 270) {
+      doc.addPage();
+      y = 20;
     }
+  });
 
-    const content = starredFriends.map((friend, index) => {
-      const fullName = `${friend.firstName || ''} ${friend.lastName || ''}`.trim() || friend.friendName || 'Unknown';
-      const state = friend.stateFull || friend.state || friend.native || 'N/A';
-      const club = friend.club || 'N/A';
-      const hobby = friend.hobby || 'N/A';
-      
-      return `${index + 1}. ${fullName}
-   - is from: ${state}
-   - club interest : ${club}
-   - hobby is : ${hobby}`;
-    }).join('\n\n');
+  // Footer
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "italic");
+  doc.setTextColor(150, 150, 150);
+  doc.text("- Downloaded from SpeedFriending App", 10, y + 10);
 
-    const finalContent = ` My Starred Friends List\n\n${content}\n\n -Downloaded from SpeedFriending App`;
+  doc.save("my_starred_friends.pdf");
+  setNotifMessage("✅ Starred friends list downloaded!");
+  setNotifType("success");
+};
 
-    const blob = new Blob([finalContent], { type: 'text/plain;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'my_starred_friends.txt';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
+
 
   if (loading) {
     return (
@@ -119,6 +159,12 @@ export default function StarredFriends() {
       </div>
       
       <div className="starred-card">
+        <Notification
+  message={notifMessage}
+  type={notifType}
+  onDone={() => setNotifMessage("")}
+/>
+
         <button
           className="back-btn"
           onClick={() => navigate(-1)} // CHANGE IS HERE
