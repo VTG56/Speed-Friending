@@ -4,7 +4,7 @@ const Particles = () => {
   // Generate particles with better distribution
   const generateParticles = () => {
     const particles = [];
-    const bottomParticleCount = 20; // Particles from bottom
+    const bottomParticleCount = 8; // Particles from bottom
     const middleParticleCount = 8; // Particles from middle
     
     // Bottom particles
