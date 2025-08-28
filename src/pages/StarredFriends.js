@@ -86,7 +86,7 @@ export default function StarredFriends() {
   doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
   doc.setTextColor(44, 62, 80); // dark blue-gray
-  doc.text("My Starred Friends List", 10, y);
+  doc.text("These people are cool ig-?", 10, y);
 
   y += 15;
 
@@ -127,7 +127,7 @@ export default function StarredFriends() {
   doc.setFontSize(10);
   doc.setFont("helvetica", "italic");
   doc.setTextColor(150, 150, 150);
-  doc.text("- Downloaded from SpeedFriending App", 10, y + 10);
+  doc.text("- Downloaded from SpeedFriending App :D)", 10, y + 10);
 
   doc.save("my_starred_friends.pdf");
   setNotifMessage("✅ Starred friends list downloaded!");

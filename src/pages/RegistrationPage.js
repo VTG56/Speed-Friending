@@ -97,19 +97,29 @@ function Registration() {
 
   // Options
   const classOptions = [
-  // Session 1
-  "S1 AIML-CR001", "S1 AIML-CR002", "S1 BT-217", "S1 BT-218", "S1 CH-104", "S1 CH-105",
+  // Session 1 (priority classes first)
+  "S1 CV-217", "S1 CV-306", "S1 CV-314", "S1 CV-312", "S1 CV-317", "S1 CV-319",
+  "S1 EE-116", "S1 EE-117", "S1 EE-112", "S1 EE-203",
+  // Existing
+  "S1 AIML-CR001", "S1 AIML-CR002", "S1 BT-217", "S1 BT-218",
+  "S1 CH-104", "S1 CH-105",
   "S1 CE-204", "S1 CE-205", "S1 CE-217", "S1 CE-312", "S1 CE-317", "S1 CE-319",
-  "S1 EE-116", "S1 EE-117", "S1 EE-112", "S1 EE-203", "S1 EE-202", "S1 EE-215",
+  "S1 EE-202", "S1 EE-215",
   "S1 EC-203", "S1 EC-204", "S1 EC-205", "S1 EC-211", "S1 EC-212", "S1 EC-214",
   "S1 IS-112B", "S1 IS-106A", "S1 xyz",
-  // Session 2
-  "S2 AIML-CR001", "S2 AIML-CR002", "S2 BT-217", "S2 BT-218", "S2 CH-104", "S2 CH-105",
+
+  // Session 2 (priority classes first)
+  "S2 CV-217", "S2 CV-306", "S2 CV-314", "S2 CV-312", "S2 CV-317", "S2 CV-319",
+  "S2 EE-116", "S2 EE-117", "S2 EE-112", "S2 EE-203",
+  // Existing
+  "S2 AIML-CR001", "S2 AIML-CR002", "S2 BT-217", "S2 BT-218",
+  "S2 CH-104", "S2 CH-105",
   "S2 CE-204", "S2 CE-205", "S2 CE-217", "S2 CE-312", "S2 CE-317", "S2 CE-319",
-  "S2 EE-116", "S2 EE-117", "S2 EE-112", "S2 EE-203", "S2 EE-202", "S2 EE-215",
+  "S2 EE-202", "S2 EE-215",
   "S2 EC-203", "S2 EC-204", "S2 EC-205", "S2 EC-211", "S2 EC-212", "S2 EC-214",
   "S2 IS-112B", "S2 IS-106A", "S2 xyz"
 ];
+
 
   const clubOptions = [
   "acm","accelerate","alaap","antariksh","ashwa",

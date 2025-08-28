@@ -126,6 +126,15 @@ historyListenersRef.current = {};
     });
   }, []);
 
+  // Helper function to get earliest timestamp for a user (for tie-breaking)
+  const getEarliestTimestamp = (uid) => {
+    const userHistory = pointsHistory[uid];
+    if (!userHistory || userHistory.length === 0) {
+      return new Date(); // If no history, use current time (lowest priority)
+    }
+    return userHistory[0].timestamp; // First entry (earliest) since history is sorted
+  };
+
   // Effect for fetching the main leaderboard list
   useEffect(() => {
     if (!selectedClass || !currentUser) return;
@@ -156,8 +165,20 @@ historyListenersRef.current = {};
 
         // De-duplicate and get top 10
         const uniqueData = Array.from(new Map(combinedData.map(item => [item.uid, item])).values());
+        
+        // FIXED: Apply tie-breaking logic here during the sort
         const sortedData = uniqueData
-          .sort((a, b) => b.points_total - a.points_total)
+          .sort((a, b) => {
+            // Primary sort: by points (descending)
+            if (b.points_total !== a.points_total) {
+              return b.points_total - a.points_total;
+            }
+            
+            // Tie-breaker: by earliest timestamp (ascending - earlier = higher rank)
+            const aEarliestTime = getEarliestTimestamp(a.uid);
+            const bEarliestTime = getEarliestTimestamp(b.uid);
+            return aEarliestTime - bEarliestTime;
+          })
           .slice(0, 10);
         
         setLeaderboardData(sortedData);
