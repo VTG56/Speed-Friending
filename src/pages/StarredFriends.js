@@ -130,7 +130,7 @@ export default function StarredFriends() {
   doc.text("- Downloaded from SpeedFriending App :D)", 10, y + 10);
 
   doc.save("my_starred_friends.pdf");
-  setNotifMessage("✅ Starred friends list downloaded!");
+  setNotifMessage("✅ List downloaded, go to downloads!");
   setNotifType("success");
 };
 
