@@ -1,70 +1,71 @@
-# Getting Started with Create React App
+# SpeedFriending 🤝✨
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+SpeedFriending is an interactive, gamified networking web app designed for college events. It encourages students to connect with their classmates in a fun and competitive way. Players register, receive a unique key, and collect keys from other students in their class to climb the leaderboard.
 
-## Available Scripts
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://speedfriending-rvcesip2025.web.app)
 
-In the project directory, you can run:
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Core Flow 🚀
 
-### `npm test`
+The application is divided into two main phases: Registration and the Main Game.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 1. Registration Phase 📝
 
-### `npm run build`
+New players start by registering their profile.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+* **Enter Details:** Students provide their Name, Hobby, Club Preference, Native Place, and Classroom.
+* **Generate Key:** The system creates a unique key for the student in the format: `Name+Native+ClubPreference+Hobby`.
+* **Enter Arena:** After successful registration, students are directed to a "Thank You" page with a button to enter the main game arena.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 2. Main Game Phase 🏆
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+The Arena is the central hub of the application and includes three primary features:
 
-### `npm run eject`
+#### (a) Real-Time Leaderboard 📊
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Displays a live leaderboard for the player's specific class.
+* Rankings are based on points, with data pulled from Firestore in real-time.
+* Players can track their standing against their classmates throughout the event.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### (b) Starred Friends List ⭐
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* After successfully entering another student's key, players have the option to "star" them.
+* Starred friends are saved to a personal list within the player's profile.
+* Players can view all their starred friends' details on a dedicated page and **download the list as a PDF**.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### (c) Key Input System 🔑
 
-## Learn More
+* Players exchange keys with classmates and enter them into the input field.
+* The system validates the key against the Firestore database.
+* **Validation Rules:**
+    * Keys are only valid if both students are in the **same classroom**.
+    * Players **cannot enter their own key**.
+    * **Duplicate key entries** from the same player are ignored.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Points System 🏅
 
-### Code Splitting
+The scoring is simple and designed to encourage interaction.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* **Valid Key Match**: `+10 points`
+* Points are automatically tallied and reflected on the leaderboard in real-time.
 
-### Analysing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Classroom Restriction 🚪
 
-### Making a Progressive Web App
+A core rule of the game is that interaction is limited to within a single class. The system checks that both the player and the student whose key is entered belong to the same `classroom` before awarding any points. This encourages students to get to know their immediate peers.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Tech Stack 🛠️
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* **Frontend**: HTML, CSS, JavaScript
+* **Backend**: Node.js / Express
+* **Database**: Firebase Firestore (for real-time data)
+* **Live Updates**: Firestore snapshot listeners
+* **Hosting**: Firebase Hosting
