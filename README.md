@@ -8,7 +8,7 @@ The initial development and core framework were established by the team, with va
 
 SpeedFriending is an interactive, gamified networking web app designed for college events. It encourages students to connect with their classmates in a fun and competitive way. Players register, receive a unique key, and collect keys from other students in their class to climb the leaderboard.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://student-registration-app-67741.web.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://speedfriending-rvcesip2025.web.app)
 
 ---
 
