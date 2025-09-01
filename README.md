@@ -1,10 +1,14 @@
 # SpeedFriending 🤝✨
 
-This is version 1 of the SpeedFriending project. A significant part of the early development was contributed by **shash-2106**.
+## Project History
+
+The initial development and core framework were established by the team, with valuable contributions from **shash-2106** as a key collaborator. You can view their commit history [here](https://github.com/shash-2106/SpeedFriending/commits?author=shash-2106).
+
+---
 
 SpeedFriending is an interactive, gamified networking web app designed for college events. It encourages students to connect with their classmates in a fun and competitive way. Players register, receive a unique key, and collect keys from other students in their class to climb the leaderboard.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://speedfriending-rvcesip2025.web.app)
+[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen.svg)](https://student-registration-app-67741.web.app)
 
 ---
 
@@ -25,16 +29,19 @@ New players start by registering their profile.
 The Arena is the central hub of the application and includes three primary features:
 
 #### (a) Real-Time Leaderboard 📊
+
 * Displays a live leaderboard for the player's specific class.
 * Rankings are based on points, with data pulled from Firestore in real-time.
 * Players can track their standing against their classmates throughout the event.
 
 #### (b) Starred Friends List ⭐
+
 * After successfully entering another student's key, players have the option to "star" them.
 * Starred friends are saved to a personal list within the player's profile.
 * Players can view all their starred friends' details on a dedicated page and **download the list as a PDF**.
 
 #### (c) Key Input System 🔑
+
 * Players exchange keys with classmates and enter them into the input field.
 * The system validates the key against the Firestore database.
 * **Validation Rules**:
